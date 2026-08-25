@@ -17,12 +17,12 @@
         <button
             type="button"
             id="start-task-countdown-minute"
-            class="flex items-center gap-1.5 px-1 py-2 rounded-xl bg-green-500 opacity-75 hover:bg-green-600 opacity-75 transition-colors cursor-pointer text-white"
+            class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-green-500 opacity-75 hover:bg-green-600 opacity-75 transition-colors cursor-pointer text-white"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M8 5v14l11-7z"/>
             </svg>
-            タスクを始める
+            Play
         </button>
     </div>
 

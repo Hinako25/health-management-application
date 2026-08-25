@@ -1,6 +1,7 @@
-<flux:tab.group>
+<flux:tab.group class="fixed top-0 right-0 left-0 z-10 min-h-10">
    @csrf
-   <form method="POST" action="{{ route('logout') }}" class="w-full">
+   <form method="POST" action="{{ route('logout') }}" class="w-full flex items-center">
+     <img src="{{ asset('img/logo.png') }}" alt="logo" class="w-10 h-10 inline-block">
      <flux:tabs>
         <flux:tab name="home" icon="home" href="{{ route('home') }}" :current="request()->routeIs('home')">Home</flux:tab>
         <flux:tab name="setting"icon="cog-6-tooth" href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard')">Setting</flux:tab>

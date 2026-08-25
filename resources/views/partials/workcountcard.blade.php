@@ -1,3 +1,7 @@
+@php
+    $totalSeconds = 0;
+    $remainingSeconds = 0;
+@endphp
 <div
     id="timer-root"
     data-sound-enabled="{{ auth()->user()->sound_enabled ? '1' : '0' }}"
@@ -22,9 +26,9 @@
             data-sound-enabled="1"
             type="button" 
             id="timer-sound-toggle" 
-            class="text-white bg-green-500 opacity-50 hover:text-green-700 px-3 py-1 rounded-md {{ auth()->user()->sound_enabled ? '' : 'hidden' }}"
+            class="w-full text-white bg-green-500 opacity-75 hover:bg-green-700 cursor-pointer transition-colors px-3 py-1 rounded-md {{ auth()->user()->sound_enabled ? '' : 'hidden' }}"
          >
-            <img src="{{ asset('img/bell.png') }}" alt="タイマー音:ON" class="flex items-center justify-center w-4 h-4"/>
+            <img src="{{ asset('img/bell.png') }}" alt="タイマー音:ON" class="inline-block w-4 h-4"/>
             タイマー音:ON
          </button>
          <button 
@@ -33,10 +37,20 @@
             id="timer-sound-toggle-off" 
             class="w-full bg-[#eceef1] hover:bg-[#d5d8dc] trensition-colors cursor-pointer px-3 py-1 rounded-md {{ auth()->user()->sound_enabled ? 'hidden' : '' }}"
          >
-          <img src="{{ asset('img/x-bell.png') }}" alt="タイマー音:OFF" class="w-4 h-4 flex items-center justify-center"/>
+          <img src="{{ asset('img/x-bell.png') }}" alt="タイマー音:OFF" class="w-4 h-4 inline-block"/>
            タイマー音:OFF 
          </button>
         </div>
         <button type="button" id="stop-work" disabled class="w-full bg-[#eceef1] hover:bg-[#d5d8dc] transition-colors cursor-pointer px-3 py-1 rounded-md disabled:cursor-not-allowed">作業を止める</button>
+        <button
+            type="button"
+            id="start-stretch-countdown"
+            class="w-full px-1 py-2 border-green-500 bg-white rounded-xl border-2 hover:bg-green-500 hover:text-white transition-colors cursor-pointer"
+        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="text-green-500 inline-block">
+                <path d="M8 5v14l11-7z"/>
+        </svg>  
+         ストレッチを始める
+        </button>
     </div>
 </div>

@@ -8,13 +8,22 @@ export function initTaskCount() {
     }
     // タスクカウントの表示を取得する
     const display = root.querySelector('#task-countdown-display');
-    // タスクカウントの開始ボタンを取得する
-    const startBtn = root.querySelector('#start-task-countdown-minute');
+    // タスクカウントの開始ボタンを取得する（ストレッチカード・作業タイマーカードの両方）
+    const startBtns = [
+        root.querySelector('#start-task-countdown-minute'),
+        document.getElementById('start-stretch-countdown'),
+    ].filter(Boolean);
     // タスクカウントのボタンを定義する(のちのカウントダウンに生かすため)
     const taskButtons = root.querySelectorAll('.task-item');
     // タスクカウントの表示または、開始ボタンがない場合は終了する
-    if (!display || !startBtn) {
+    if (!display || startBtns.length === 0) {
         return;
+    }
+
+    function setStartButtonsDisabled(disabled) {
+        startBtns.forEach((button) => {
+            button.disabled = disabled;
+        });
     }
     // タスクカウントのデータをJSON形式で取得する
     const tasks = JSON.parse(root.dataset.tasks ?? '[]');
@@ -63,7 +72,7 @@ export function initTaskCount() {
         });
         // タスクカウントがない場合は開始ボタンを無効化する
         if (intervalId === null) {
-            startBtn.disabled = getNextUncheckedTaskId() === null;
+            setStartButtonsDisabled(getNextUncheckedTaskId() === null);
         }
     }
 
@@ -101,7 +110,7 @@ export function initTaskCount() {
 
         activeTaskId = null;
         remainingSeconds = 0;
-        startBtn.disabled = false;
+        setStartButtonsDisabled(false);
         renderCountdown();
         renderTasks();
 
@@ -123,7 +132,7 @@ export function initTaskCount() {
 
         activeTaskId = taskId;
         remainingSeconds = Number(button.dataset.countdownSeconds);
-        startBtn.disabled = true;
+        setStartButtonsDisabled(true);
         renderTasks();
         renderCountdown();
 
@@ -160,7 +169,9 @@ export function initTaskCount() {
         });
     });
 
-    startBtn.addEventListener('click', startCountdown);
+    startBtns.forEach((button) => {
+        button.addEventListener('click', startCountdown);
+    });
 
     renderCountdown();
     renderTasks();

@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/creategoals/submit',[CreateGolasController::class, 'store'])->name('creategoals.submit');
     Route::get('/home', [HomeController::class, 'show'])->name('home');
     Route::post('/home/completed-tasks', [TaskController::class, 'updateCompletedTasks'])->name('home.completed-tasks');
+    Route::post('/home/sound-enabled', [TaskController::class, 'updateSoundEnabled'])->name('home.sound-enabled');
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::post('/dashboard/update', [DashboardController::class, 'dashboardUpdate'])->name('dashboard.update');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

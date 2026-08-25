@@ -6,8 +6,9 @@ use Illuminate\Validation\Rules\Password;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
+
 
 class CreateAccountController extends Controller
 {
@@ -18,19 +19,16 @@ class CreateAccountController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-           'email' => ['required', 'email', 'unique:users,email'],
+       $validated = $request->validate([
+           'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
            'password' => ['required', Password::default(), 'confirmed'],
         ]);
 
-        User::create([
-            'name' => Str::before($validated['email'], '@'),
-            'email' => $validated['email'],
-            'password' => $validated['password'],
+       User::create([
+           'email' => $validated['email'],
+          'password' => $validated['password'], // hashed キャストで自動ハッシュ
         ]);
 
-        return redirect()
-            ->route('login')
-            ->with('success', 'アカウントを作成しました。');
-    }
+        return redirect()->route('login')->with('success', 'アカウントを作成しました。');
+    }     
 }

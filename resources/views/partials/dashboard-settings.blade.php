@@ -1,4 +1,4 @@
-<div id="settings" class="bg-white p-4  rounded-lg shadow-md w-4/5 mx-auto border-2 border-gray-300">
+<div id="settings" class="bg-white p-4 rounded-lg shadow-md w-4/5 mx-auto border-2 border-gray-300">
   <form method="POST" action="{{ route('dashboard.update') }}" class="flex-1 space-y-6">
     @csrf
 

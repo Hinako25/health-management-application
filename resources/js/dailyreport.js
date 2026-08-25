@@ -206,7 +206,7 @@ function drawChart() {
 
     const width = rect.width;
     const height = rect.height;
-    const padding = { top: 16, right: 12, bottom: 28, left: 36 };
+    const padding = { top: 12, right: 8, bottom: 20, left: 32 };
     const chartWidth = width - padding.left - padding.right;
     const chartHeight = height - padding.top - padding.bottom;
 
@@ -215,7 +215,8 @@ function drawChart() {
     chartCtx.fillRect(padding.left, padding.top, chartWidth, chartHeight);
 
     const slotWidth = chartWidth / days.length;
-    const barWidth = Math.max(slotWidth * 0.6, 4);
+    const barWidth = Math.max(slotWidth * 0.6, 2);
+    const labelStep = days.length > 60 ? 10 : days.length > 30 ? 5 : days.length > 14 ? 2 : 1;
 
     values.forEach((value, index) => {
         const barHeight = (value / maxVal) * chartHeight;
@@ -227,10 +228,12 @@ function drawChart() {
         chartCtx.fillRect(x, y, barWidth, Math.max(barHeight, value > 0 ? 2 : 0));
         chartCtx.globalAlpha = 1;
 
-        chartCtx.fillStyle = '#6b7280';
-        chartCtx.font = '10px sans-serif';
-        chartCtx.textAlign = 'center';
-        chartCtx.fillText(String(index + 1), x + barWidth / 2, height - 8);
+        if (index % labelStep === 0 || index === days.length - 1) {
+            chartCtx.fillStyle = '#6b7280';
+            chartCtx.font = '9px sans-serif';
+            chartCtx.textAlign = 'center';
+            chartCtx.fillText(String(index + 1), x + barWidth / 2, height - 6);
+        }
     });
 
     chartCtx.strokeStyle = '#d1d5db';
