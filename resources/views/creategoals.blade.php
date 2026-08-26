@@ -8,7 +8,13 @@
     @vite(['resources/css/app.css'])
     @livewireStyles
  </head>
- <body class="w-full h-full mt-5 flex items-start">
+ <body class="w-full h-full mt-5 flex items-start relative">
+  <img
+        src="{{ asset('img/homegbdesign.png') }}"
+        alt=""
+        aria-hidden="true"
+        class="absolute inset-0 w-full h-full object-cover -z-10 pointer-events-none"
+    >
   <div class="border-gray-300 border-2 rounded-md p-8 bg-white">
     <h1 class="font-bold text-center text-2xl my-2">目標設定</h1>
     <p class="text-center text-green-500 my-2">目標を設定して継続に役立ててください。</p>
