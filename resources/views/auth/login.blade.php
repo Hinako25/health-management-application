@@ -19,7 +19,7 @@
                 <div class="border-gray-300 border-2 w-full max-w-sm rounded-md p-6 bg-white">
                     <h1 class="font-bold text-center">ログイン</h1>
                     <p class="text-center my-2">ログイン情報を入力してください。</p>
-                    <form class="flex flex-col gap-4" method="POST" action="{{ route('login.submit') }}">
+                    <form class="flex flex-col gap-4 text-sm" method="POST" action="{{ route('login.submit') }}">
                         @csrf
                         <input class="border-2 rounded-md p-2 border-gray-300 hover:border-black" type="text" name="email" placeholder="Email" value="{{ old('email') }}" required>
                         <input class="border-2 rounded-md p-2 border-gray-300 hover:border-black" type="password" name="password" placeholder="Password" required>
@@ -28,7 +28,7 @@
                             <label for="remember">ログイン状態を保持する</label>
                         </div>
                         <button type="submit" class="bg-green-500 hover:bg-green-700 opacity-75 text-white px-3 py-1 rounded-md cursor-pointer">ログイン</button>
-                        @error('login')
+                        @error('email')
                             <p class="text-red-600 text-sm border border-red-300 bg-red-50 rounded-md p-3" role="alert">{{ $message }}</p>
                         @enderror
                     </form>
