@@ -23,6 +23,8 @@ class DashboardController extends Controller
         'password' => ['nullable', 'required_with:passwordConfirm', 'current_password'],
         'passwordConfirm' => ['nullable', 'required_with:password', Password::default()],
         'countdown_minutes' => ['required', 'integer', Rule::in(array_keys(config('workcountdown.options')))],
+        'total_goals' => ['required', 'integer', Rule::in(array_keys(config('goals.options')))],
+        'daily_tasks' => ['required', 'integer', Rule::in(array_keys(config('dailytaskcontdown.options')))],
 ]);
 
       $user = auth()->user();
@@ -36,7 +38,9 @@ class DashboardController extends Controller
           $user->password = $validated['passwordConfirm'];
         }
 
-        $user->countdown_minutes = $request->integer('countdown_minutes');
+        $user->countdown_minutes = $validated['countdown_minutes'];
+        $user->total_goals = $validated['total_goals'];
+        $user->daily_tasks = $validated['daily_tasks'];
         $user->save();
 
         return back()->with('success', '設定を保存しました。');
