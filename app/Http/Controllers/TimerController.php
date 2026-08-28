@@ -11,11 +11,14 @@ class TimerController extends Controller
         $minutes = auth()->user()->countdown_minutes ?? 60;
         $totalSeconds = $minutes * 60;
 
-        return view('workcountcard', [
+        return redirect()->route('workcountcard', [
+            'minutes' => $minutes,
             'totalSeconds' => $totalSeconds,
             'remainingSeconds' => $totalSeconds,
         ]);
+
     }
+
 }
 
    

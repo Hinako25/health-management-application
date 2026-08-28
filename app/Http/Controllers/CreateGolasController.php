@@ -19,18 +19,19 @@ class CreateGolasController extends Controller
             'total_goals' => ['required', 'integer'],
             'countdown_minutes' => ['required', 'integer'],
             'daily_tasks' => ['required', 'integer'],
-            'reward' => ['required', 'string', 'max:255'],
+            'goal_reward' => ['required', 'string', 'max:50'],
         ]);
 
         auth()->user()->update($validated);
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('auto_start_work', true);
 
     }
     public function createGoalCardUpdate(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'daily_tasks' => ['required', 'integer'],
+
         ]);
         return redirect()->route('goalcard');
     }
