@@ -5,11 +5,11 @@
     data-daily-tasks="{{ auth()->user()->daily_tasks ?? 0 }}"
     data-created-at="{{ auth()->user()->created_at->timestamp }}"
     data-chart-data='@json(auth()->user()->daily_chart_data ?? [])'
-    class="border-gray-300 border-2 rounded-md w-full flex flex-col min-h-0 bg-white overflow-hidden"
+    class="border-gray-300 border-2 rounded-md w-full flex flex-col min-h-0 bg-white overflow-hidden dark:bg-black"
 >
     <div class="p-4 pb-2 shrink-0">
-        <h2 class="text-base font-semibold text-[#1a1d23]">作業時間</h2>
-        <canvas id="daily-chart-canvas" class="mt-2 block h-24 w-full max-h-1/3"></canvas>
+        <h2 class="text-base font-semibold text-[#1a1d23] dark:text-white">作業時間</h2>
+        <canvas id="daily-chart-canvas" class="mt-2 block h-24 w-full max-h-1/3 dark:text-white"></canvas>
     </div>
     @if(auth()->user()->daily_chart_data)
      @error('daily_chart_data')
