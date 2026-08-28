@@ -116,7 +116,10 @@ export function initTaskCount() {
 
         const nextTaskId = getNextUncheckedTaskId();
         if (nextTaskId === null) {
+            alert('カウントダウンが終了しました.作業(勉強)の「作業を始める」ボタンを押してください。');
             incrementCompletedTasks();
+            checkedTaskIds.clear(); 
+            renderTasks();
             return;
         }
 
