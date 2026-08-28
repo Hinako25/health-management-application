@@ -263,7 +263,6 @@ export function addWorkSeconds(seconds, type = 'work') {
 
     const data = getChartData();
     const today = getTodayKey();
-    const completedTasks = Number(goalsRoot?.dataset.completedTasks ?? taskRoot?.dataset.completedTasks ?? 0);
 
     if (!data[today] || typeof data[today] === 'number') {
         const previous = typeof data[today] === 'number' ? data[today] : 0;
