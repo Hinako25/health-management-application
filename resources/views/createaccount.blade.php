@@ -64,11 +64,28 @@
                 </form>
             </div>
         </div>
-        <div class="hidden md:block md:w-[50%] md:h-screen overflow-hidden">
-            <img
+        <div class="relative w-full min-h-screen md:block md:w-[50%] overflow-hidden">
+            <div class="absolute inset-0 w-full h-screen flex flex-col justify-center items-center">
+                <div class="flex flex-col gap-4 w-2/3">
+                  <p class="text-center text-xl font-bold text-yellow-500 opacity-75 block">仕事や勉強の合間に少しストレッチを行うことで<br>肩や首の痛みを改善しませんか？</p>
+                   <br>
+                   <p class="text-left text-sm mx-5 block">
+                    このサイトは設定した期間内で仕事や勉強時間を計り、休憩時間にストレッチを行うサイトです。
+                    <br>
+                    実際に指定したストレッチが3分程度あり、その後自分の指定した時間勉強や仕事を好きなタイミングで行うことができます。
+                    </p>
+                    <br>
+                    <div class="w-full h-full aspect-3/2 rounded-sm flex justify-center items-center relative z-10">
+                  <img src="{{ asset('img/trialimg.png') }}" alt="ストレッチ画像" class="w-full h-full object-contain object-center">
+                    </div>
+                </div>
+
+            </div>
+
+            <img    
                 src="{{ asset('img/bgdesign.png') }}"
                 alt=""
-                class="h-full w-full object-cover object-center"
+                class="absolute inset-0 w-full h-full object-fit pointer-events-none -z-10"
             >
         </div>
     </div>
