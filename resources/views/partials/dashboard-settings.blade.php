@@ -6,12 +6,12 @@
     $currentCountdown = config('workcountdown.options')[$user->countdown_minutes] ?? '未設定';
 @endphp
 
-<div id="settings" class="bg-white p-2 rounded-lg shadow-md w-2/5 min-w-5/6 mx-auto border-2 border-gray-300 dark:bg-black dark:text-white">
+<div id="settings" class="bg-white p-2 rounded-lg shadow-md w-2/5 min-w-5/6 mx-auto border-2 border-gray-300 ">
   
   <form method="POST" action="{{ route('dashboard.update') }}" class="flex-1 space-y-6">
     @csrf
 
-          <div class="flex flex-col gap-2 text-lg mt-5 dark:text-white">
+          <div class="flex flex-col gap-2 text-lg mt-5">
              <p class="text-xl font-bold">アカウント設定</p>
                <p class="text-lg font-bold mt-4">メールアドレス</p>
                {{-- email address --}}
@@ -51,26 +51,26 @@
 
           </div>
 
-          <div class="flex flex-col gap-3 dark:text-white">
+          <div class="flex flex-col gap-3">
             <p class="text-xl font-bold">ストレッチ 設定</p>
 
-            <div class="rounded-md border border-gray-200 bg-gray-50 p-4 text-sm dark:border-gray-600 dark:bg-gray-900">
+            <div class="rounded-md border border-gray-200 bg-gray-50 p-4 text-sm">
               <p class="font-bold mb-2">現在の設定</p>
               <ul class="space-y-1">
                 <li class="flex justify-between gap-4">
-                  <span class="text-gray-600 dark:text-gray-300">仕事(勉強)時間</span>
+                  <span class="text-gray-600">仕事(勉強)時間</span>
                   <span>{{ $currentCountdown }}</span>
                 </li>
                 <li class="flex justify-between gap-4">
-                  <span class="text-gray-600 dark:text-gray-300">目標日数</span>
+                  <span class="text-gray-600">目標日数</span>
                   <span>{{ $currentTotalGoals }}</span>
                 </li>
                 <li class="flex justify-between gap-4">
-                  <span class="text-gray-600 dark:text-gray-300">一日の目標ストレッチ回数</span>
+                  <span class="text-gray-600">一日の目標ストレッチ回数</span>
                   <span>{{ $currentDailyTasks }}</span>
                 </li>
                 <li class="flex justify-between gap-4">
-                  <span class="text-gray-600 dark:text-gray-300">目標日数達成後の自分へのご褒美</span>
+                  <span class="text-gray-600">目標日数達成後の自分へのご褒美</span>
                   <span>{{ $currentReward }}</span>
                 </li>
 
@@ -149,14 +149,6 @@
               <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
           </flux:field>
-          </div>
-          <div class="py-8">
-           <p class="text-xl font-bold my-5 dark:text-white">その他</p>
-           <flux:field variant="inline">
-                <flux:label class="text-sm font-normal text-right shrink-0">ダークモードを有効にする</flux:label>
-                 <flux:switch x-data x-model="$flux.dark" label="Dark mode" class="border-none ring-2 ring-gray-300" />
-                  <flux:error name="dark_mode" />
-           </flux:field>
           </div>
 
           <div class="flex flex-col items-center my-5">

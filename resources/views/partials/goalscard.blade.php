@@ -3,17 +3,17 @@
     $completedTasks = $completedTasks ?? auth()->user()->completed_tasks ?? 0;
 @endphp
 
-<div class="border-gray-300 border-2 rounded-md w-full flex flex-col min-h-0 bg-white p-5 dark:bg-black">
+<div class="border-gray-300 border-2 rounded-md w-full flex flex-col min-h-0 bg-white p-5">
 
     <div class="pb-3 shrink-0">
-        <h2 class="text-base font-semibold text-[#1a1d23] dark:text-white">今日の成果</h2>
+        <h2 class="text-base font-semibold text-[#1a1d23]">今日の成果</h2>
     </div>
 
     <flux:checkbox.group
         id="goals-card-root"
         data-daily-tasks="{{ $dailyTasks }}"
         data-completed-tasks="{{ $completedTasks }}"
-        class="shrink-0 flex flex-col items-start gap-3 w-full dark:text-white"
+        class="shrink-0 flex flex-col items-start gap-3 w-full"
         wire:model="goals-card-root"
         wire:click="toggleGoalCard"
     >
