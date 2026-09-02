@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('new_email')->nullable();
+            $table->string('new_email_confirmation')->nullable();
+            $table->string('change_password')->nullable();
+            $table->string('change_password_confirmation')->nullable();
             $table->rememberToken();
             // ユーザー作成日時からの目標設定
             $table->unsignedSmallInteger('total_goals')->nullable();
@@ -31,8 +35,6 @@ return new class extends Migration
             // 作業(勉強)時間の設定
             $table->unsignedSmallInteger('countdown_minutes')->default(60);
             $table->boolean('sound_enabled')->default(0);
-
-
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

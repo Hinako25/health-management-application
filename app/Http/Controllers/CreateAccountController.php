@@ -21,13 +21,21 @@ class CreateAccountController extends Controller
     {
         $validated = $request->validate([
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
-            'password' => ['required', Password::default(), 'confirmed'],
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)->max(15)->numbers()->letters()->symbols(),
+            ],
         ], [
             'email.unique' => 'このメールアドレスは既に登録されています。',
             'email.required' => 'メールアドレスを入力してください。',
             'password.required' => 'パスワードを入力してください。',
             'password.confirmed' => 'パスワードが一致しません。',
-        
+            'password.min' => 'パスワードは8文字以上で入力してください。',
+            'password.max' => 'パスワードは15文字以内で入力してください。',
+            'password.numbers' => 'パスワードには数字を含めてください。',
+            'password.letters' => 'パスワードには英字を含めてください。',
+            'password.symbols' => 'パスワードには記号を含めてください。',
         ]);
 
         User::create([
