@@ -26,13 +26,14 @@ class LoginController extends Controller
             return back()
                 ->withInput($request->only('email'))
                 ->withErrors([
-                    'login' => 'メールアドレスまたはパスワードが正しくありません。',
-                    'email' => 'メールアドレスまたはパスワードが正しくありません。またはパスワードのセキュリティが欠けています。',
+                    'email' => 'メールアドレスまたはパスワードが正しくありません。またはパスワードのセキュリティが欠けています。'
                 ]);
         }
+
         if (! auth()->user()->total_goals) {
             return redirect()->route('creategoals');
         }
+
         return redirect()->route('home');
 
     }

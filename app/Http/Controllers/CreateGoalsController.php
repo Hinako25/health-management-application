@@ -6,7 +6,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class CreateGolasController extends Controller
+class CreateGoalsController extends Controller
 {
     public function create(): View
     {
