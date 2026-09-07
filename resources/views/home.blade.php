@@ -1,6 +1,6 @@
 @extends('layouts.app-with-header')
 
-@section('main')  
+@section('main')
  <div class="relative w-full min-h-screen">
     <img
         src="{{ asset('img/homegbdesign.png') }}"
