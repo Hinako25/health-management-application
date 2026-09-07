@@ -21,35 +21,35 @@ class DashboardController extends Controller
 
         $validated = $request->validate([
             'email' => ['nullable', 'email'],
-            'newEmail' => ['nullable', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
-            'password' => ['nullable', 'required_with:changePassword', 'current_password'],
-            'changePassword' => ['nullable', 'required_with:password', Password::default(
+            'new_email' => ['nullable', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
+            'password' => ['nullable', 'required_with:change_password', 'current_password'],
+            'change_password' => ['nullable', 'required_with:password', Password::default(
                 'required',
                 'confirmed',
                 Password::min(8)->max(15)->numbers()->letters()->symbols(),
             )],
 
-            'changePasswordConfirm' => ['nullable', 'required_with:changePassword', 'same:changePassword'],
+            'change_password_confirmation' => ['nullable', 'required_with:change_password', 'same:change_password'],
             'countdown_minutes' => ['required', 'integer', Rule::in(array_keys(config('workcountdown.options')))],
             'total_goals' => ['required', 'integer', Rule::in(array_keys(config('goals.options')))],
             'daily_tasks' => ['required', 'integer', Rule::in(array_keys(config('dailytaskcontdown.options')))],
         ], [
             'password.required' => 'パスワードを入力してください。',
             'password.current_password' => '現在のパスワードが正しくありません。',
-            'changePassword.required' => '新しいパスワードを入力してください。',
-            'changePasswordConfirm.same' => 'パスワードが一致しません。',
+            'change_password.required' => '新しいパスワードを入力してください。',
+            'change_password_confirmation.same' => 'パスワードが一致しません。',
             'countdown_minutes.required' => '作業時間を選択してください。',
             'countdown_minutes.in' => '作業時間を選択してください。',
             'total_goals.required' => '目標を選択してください。',
             'daily_tasks.required' => '毎日のタスクを選択してください。',
         ]);
 
-        if ($request->filled('newEmail') && $validated['newEmail'] !== $user->email) {
-            $user->email = $validated['newEmail'];
+        if ($request->filled('new_email') && $validated['new_email'] !== $user->email) {
+            $user->email = $validated['new_email'];
         }
 
-        if ($request->filled('changePassword')) {
-            $user->password = $validated['changePassword'];
+        if ($request->filled('change_password')) {
+            $user->password = $validated['change_password'];
         }
 
         $user->countdown_minutes = $validated['countdown_minutes'];
@@ -57,6 +57,6 @@ class DashboardController extends Controller
         $user->daily_tasks = $validated['daily_tasks'];
         $user->save();
 
-        return back()->with('success', '設定を保存しました。');
+        return back()->with('success', '保存が成功しました!');
     }
 }

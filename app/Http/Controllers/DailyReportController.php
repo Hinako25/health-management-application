@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 
-class DailyCahrt extends Controller
+class DailyReportController extends Controller
 {
     public function show(): View
     {

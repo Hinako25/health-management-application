@@ -19,21 +19,47 @@ use Illuminate\Support\Str;
  * @property string $email
  * @property Carbon|null $email_verified_at
  * @property string $password
+ * @property string|null $new_email
+ * @property string|null $change_password
  * @property string|null $remember_token
  * @property int|null $total_goals
  * @property int|null $daily_tasks
  * @property int|null $completed_stretch_task_ids
  * @property int|null $completed_tasks
  * @property date|null $last_reset_date
- * @property string|null $reward
+ * @property string|null $goal_reward
  * @property json|null $daily_chart_data
  * @property int|null $countdown_minutes
  * @property boolean $sound_enabled
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'password', 'countdown_minutes', 'completed_stretch_task_ids', 'total_goals', 'daily_tasks', 'completed_tasks', 'last_reset_date', 'reward', 'daily_chart_data', 'sound_enabled', 'created_at', 'updated_at'])]
-#[Hidden(['password', 'remember_token','created_at', 'updated_at'])]
+#[Fillable([
+    'name',
+    'email', 
+    'password', 
+    'new_email', 
+    'change_password', 
+    'countdown_minutes', 
+    'completed_stretch_task_ids', 
+    'total_goals', 
+    'daily_tasks', 
+    'completed_tasks', 
+    'last_reset_date', 
+    'goal_reward', 
+    'daily_chart_data', 
+    'sound_enabled', 
+    'created_at', 
+    'updated_at'
+])]
+#[Hidden([
+    'password', 
+    'new_email',
+    'change_password',
+    'remember_token',
+    'created_at', 
+    'updated_at'
+])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */

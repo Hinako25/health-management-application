@@ -18,9 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('new_email')->nullable();
-            $table->string('new_email_confirmation')->nullable();
             $table->string('change_password')->nullable();
-            $table->string('change_password_confirmation')->nullable();
             $table->rememberToken();
             // ユーザー作成日時からの目標設定
             $table->unsignedSmallInteger('total_goals')->nullable();
