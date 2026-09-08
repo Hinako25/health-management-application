@@ -22,7 +22,6 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => [
                 'required',
-                'confirmed',
                 Password::min(8)->max(15)->numbers()->letters()->symbols(),
             ],
         ]);
