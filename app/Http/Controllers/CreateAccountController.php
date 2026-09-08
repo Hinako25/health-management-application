@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 
 class CreateAccountController extends Controller
@@ -41,7 +42,7 @@ class CreateAccountController extends Controller
         User::create([
             'name' => $validated['email'],
             'email' => $validated['email'],
-            'password' => $validated['password'], // hashed キャストで自動ハッシュ
+            'password' => Hash::make($validated['password']), 
         ]);
 
         return redirect()->route('login')->with('success', 'アカウントを作成しました。');

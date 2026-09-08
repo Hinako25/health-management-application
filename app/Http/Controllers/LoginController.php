@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Validation\Rules\Password;
 
 class LoginController extends Controller
 {
@@ -19,7 +20,11 @@ class LoginController extends Controller
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
-            'password' => ['required'],
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)->max(15)->numbers()->letters()->symbols(),
+            ],
         ]);
 
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
