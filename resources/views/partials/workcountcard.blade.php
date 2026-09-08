@@ -14,13 +14,17 @@
     <div class="p-5 pb-3 shrink-0 flex items-center justify-between">
      <h2 class="text-base font-semibold text-[#1a1d23]">仕事(勉強)時間</h2>
      <div class="flex items-center gap-1">
-      <img src="{{ asset('img/x-bell.png') }}" alt="タイマー音:ON" class="inline-block w-4 h-4 rounded-full"/>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.143 17.082a24.248 24.248 0 0 0 3.844.148m-3.844-.148a23.856 23.856 0 0 1-5.455-1.31 8.964 8.964 0 0 0 2.3-5.542m3.155 6.852a3 3 0 0 0 5.667 1.97m1.965-2.277L21 21m-4.225-4.225a23.81 23.81 0 0 0 3.536-1.003A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6.53 6.53m10.245 10.245L6.53 6.53M3 3l3.53 3.53" />
+      </svg>
       <flux:switch
          id="timer-sound-toggle-button"
          :checked="(bool) auth()->user()->sound_enabled"
          align="left"
       />
-      <img src="{{ asset('img/bell.png') }}" alt="タイマー音:OFF" class="inline-block w-4 h-4 rounded-full"/>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+      </svg>
      </div>
     </div>
     <div class="flex flex-col items-center gap-3 px-5 pb-5">
