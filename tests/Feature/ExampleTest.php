@@ -23,7 +23,7 @@ class ExampleTest extends TestCase
         $response = $this->from(route('createaccount'))->post(route('createaccount.submit'), [
             'email' => 'test@example.com',
             'password' => 'password#123',
-            'password_confirmation' => 'password#123',
+            'password_confirmation' =>'password#123',
         ]);
         $response->assertRedirect(route('login'));
         $response->assertSessionHas('success', 'アカウントを作成しました。');
