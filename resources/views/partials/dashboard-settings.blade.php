@@ -29,11 +29,11 @@
                <flux:field variant="inline">
                  <flux:label class="text-sm font-normal text-right shrink-0 flex justify-between">新たなメールアドレス
                   <p class="text-sm">※変更しない場合は今のメールアドレスを入力してください</p>
-                  <flux:input type="email" name="newEmail" maxlength="25"
+                  <flux:input type="email" name="new_email" maxlength="25"
                     class="px-3 py-1.5 text-lg max-w-xs!" />
                   </flux:label>
                 </flux:field>
-               @error('newEmail')
+               @error('new_email')
                   <p class="text-red-500 text-xs ml-32 -mt-3 mb-2">{{ $message }}</p>
                @enderror
 
@@ -54,22 +54,22 @@
                <flux:field variant="inline">
                  <flux:label class="text-sm font-normal text-right shrink-0 flex justify-between">新たなパスワード
                    <p class="text-sm">※変更しない場合は今のパスワードを入力してください</p>
-                   <flux:input type="password" name="changePassword" maxlength="15"
+                   <flux:input type="password" name="change_password" maxlength="15"
                     class="px-3 py-1 text-lg max-w-xs!" />
                  </flux:label>
                 </flux:field>
-               @error('changePassword')
+               @error('change_password')
                    <p class="text-red-500 text-xs ml-32 mt-3 mb-2">{{ $message }}</p>
                @enderror
 
                {{-- chnage password confirmation --}}
                <flux:field variant="inline">
                  <flux:label class="text-sm font-normal text-right shrink-0 flex justify-between">確認パスワード
-                   <flux:input type="password" name="changePasswordConfirm" maxlength="15"
+                   <flux:input type="password" name="change_password_confirmation" maxlength="15"
                     class="px-3 py-1 text-lg max-w-xs!" />
                  </flux:label>
                 </flux:field>
-               @error('changePasswordConfirm')
+               @error('change_password_confirmation')
                    <p class="text-red-500 text-xs ml-32 mt-3 mb-2">{{ $message }}</p>
                @enderror
 
