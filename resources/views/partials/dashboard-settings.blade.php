@@ -42,7 +42,7 @@
                {{-- update password --}}
                <flux:field variant="inline">
                   <flux:label class="text-sm font-normal text-right shrink-0 flex justify-between">今までのパスワード
-                    <flux:input type="password" name="password" maxlength="15" value="{{ $user->password }}"
+                    <flux:input type="password" name="password" maxlength="15"
                       class="px-3 py-1 text-lg max-w-xs!" />
                   </flux:label>
                </flux:field>
@@ -168,11 +168,11 @@
                   </flux:select.option>
                 @endforeach
               </flux:select>
-            </flux:label>
+              </flux:label>
+            </flux:field>
             @error('daily_tasks')
               <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
-          </flux:field>
           </div>
 
           <div class="flex flex-col items-center my-5">

@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $validated = $request->validate([
             'email' => ['nullable', 'email'],
             'new_email' => ['nullable', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
-            'password' => ['nullable', 'required_with:change_password', 'current_password'],
+            'password' => ['nullable', 'required_with:change_password', 'current_password:web', Password::min(8)->max(15)->numbers()->letters()->symbols()],
             'change_password' => ['nullable', 'required_with:password', Password::min(8)->max(15)->numbers()->letters()->symbols(),
             ],
 
