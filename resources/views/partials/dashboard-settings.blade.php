@@ -1,6 +1,6 @@
 @php
     $user = auth()->user();
-    $currentReward = $user->reward ?? '未設定';
+    $currentReward = $user->goal_reward ?? '未設定';
     $currentTotalGoals = config('goals.options')[$user->total_goals] ?? '未設定';
     $currentDailyTasks = config('dailytaskcontdown.options')[$user->daily_tasks] ?? '未設定';
     $currentCountdown = config('workcountdown.options')[$user->countdown_minutes] ?? '未設定';
@@ -17,7 +17,7 @@
                {{-- email address --}}
                <flux:field variant="inline">
                  <flux:label class="text-sm font-normal text-right shrink-0 flex justify-between">今までのメールアドレス
-                  <flux:input type="email" name="email" maxlength="25"
+                  <flux:input type="email" name="email" maxlength="25" value="{{ $user->email }}"
                     class="px-3 py-1.5 text-lg max-w-xs!" />
                   </flux:label>
                 </flux:field>
@@ -42,7 +42,7 @@
                {{-- update password --}}
                <flux:field variant="inline">
                   <flux:label class="text-sm font-normal text-right shrink-0 flex justify-between">今までのパスワード
-                    <flux:input type="password" name="password" maxlength="15"
+                    <flux:input type="password" name="password" maxlength="15" value="{{ $user->password }}"
                       class="px-3 py-1 text-lg max-w-xs!" />
                   </flux:label>
                </flux:field>

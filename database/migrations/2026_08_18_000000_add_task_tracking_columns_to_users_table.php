@@ -19,6 +19,7 @@ return new class extends Migration
             if (! Schema::hasColumn('users', 'last_reset_date')) {
                 $table->date('last_reset_date')->nullable();
             }
+
         });
     }
 

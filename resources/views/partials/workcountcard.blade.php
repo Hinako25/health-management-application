@@ -41,7 +41,7 @@
             type="button"
             id="start-stretch-countdown"
             class="w-full px-1 py-2 border-green-500 bg-white rounded-xl border-2 hover:bg-green-500 hover:text-white transition-colors cursor-pointer">
-        >
+        
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="text-green-500 inline-block">
                 <path d="M8 5v14l11-7z"/>
         </svg>  

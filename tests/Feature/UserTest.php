@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class UserTest extends TestCase
 {
     use RefreshDatabase;
     public function test_returns_a_successful_response(): void
@@ -109,29 +109,59 @@ class ExampleTest extends TestCase
         $this->assertEquals(5, $user->daily_tasks);
     }
     
-    public function test_home_success(): void
+    public function test_work_success(): void
     {
         $user = User::factory()->create([
-            'email' => 'test@example.com',          
+            'email' => 'test@example.com',
             'password' => 'password#123',
-            'completed_tasks' => 1,
+            'countdown_minutes' => 60,
             'sound_enabled' => 0,
         ]);
-        $completedResponse = $this->actingAs($user)->post(route('home.completed-tasks'), [
-            'completed_tasks' => 1,
+        $response = $this->actingAs($user)->from(route('home'))->post(route('home.work'), [
+            'countdown_minutes' => 90,
         ]);
-        $completedResponse->assertOk()->assertJson([
-            'completed_tasks' => 1,
+        $response->assertRedirect(route('home'));
+        $user->refresh();
+        $this->assertEquals('test@example.com', $user->email);
+        $this->assertTrue(Hash::check('password#123', $user->password));
+        $this->assertEquals(90, $user->countdown_minutes);
+        $this->assertEquals(0, $user->sound_enabled);
+    }
+
+    public function test_update_sound_enabled_success(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'test@example.com',
+            'password' => 'password#123',
+            'countdown_minutes' => 60,
+            'sound_enabled' => 0,
         ]);
-        $soundEnabledResponse = $this->actingAs($user)->post(route('home.sound-enabled'), [
+        $response = $this->actingAs($user)->postJson(route('home.sound-enabled'), [
             'sound_enabled' => 1,
         ]);
-        $soundEnabledResponse->assertOk()->assertJson([
+        $response->assertOk()->assertJson([
             'sound_enabled' => 1,
         ]);
         $user->refresh();
-        $this->assertEquals(1, $user->completed_tasks);
         $this->assertEquals(1, $user->sound_enabled);
     }
+
+    public function test_completed_tasks_success(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'test@example.com',
+            'password' => 'password#123',
+            'completed_tasks' => 0,
+        ]);
+        $response = $this->actingAs($user)->postJson(route('home.completed-tasks'), [
+            'completed_tasks' => 6,
+        ]);
+        $response->assertOk()->assertJson([
+            'completed_tasks' => 6,
+        ]);
+        $user->refresh();
+        $this->assertEquals(6, $user->completed_tasks);
+    }
 }
+
 

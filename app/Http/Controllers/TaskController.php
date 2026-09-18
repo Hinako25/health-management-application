@@ -10,7 +10,7 @@ class TaskController extends Controller
 {
     public function show(): View
     {
-        return view('home', [
+        return view('home.task', [
             'totalSeconds' => (auth()->user()->countdown_minutes ?? 60) * 60,
             'remainingSeconds' => (auth()->user()->countdown_minutes ?? 60) * 60,
             'completedTasks' => auth()->user()->completed_tasks  ?? 0,
@@ -18,7 +18,7 @@ class TaskController extends Controller
         ]);
     }
 
-    public function updateCompletedTasks(Request $request): JsonResponse
+    public function completedTasks(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'completed_tasks' => ['required', 'integer', 'min:0'],
@@ -31,22 +31,6 @@ class TaskController extends Controller
 
         return response()->json([
             'completed_tasks' => $user->completed_tasks ?? 0,
-        ]);
-    }
-
-    public function updateSoundEnabled(Request $request): JsonResponse
-    {
-        $validated = $request->validate([
-            'sound_enabled' => ['required', 'boolean'],
-        ]);
-
-        $user = auth()->user();
-        $user->update([
-            'sound_enabled' => $validated['sound_enabled'],
-        ]);
-
-        return response()->json([
-            'sound_enabled' => (bool) $user->sound_enabled,
         ]);
     }
 }
