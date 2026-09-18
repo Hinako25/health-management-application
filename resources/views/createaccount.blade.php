@@ -39,7 +39,7 @@
                     @enderror
 
                     {{-- パスワード確認 --}}
-                    <div class="w-full text-left">
+                    <div class="w-full text-left text-sm">
                         <label class="text-sm mb-2 block">パスワード確認</label>
                         <input type="password" name="password_confirmation" maxlength="15"
                             class="w-full border-gray-300 hover:border-black transition-colors border-2 rounded-md p-2" required />
