@@ -56,8 +56,8 @@ class AppServiceProvider extends ServiceProvider
 //          return view('auth.login');
 //        });
 
-//       Fortify::registerView(function () {
-//           return view('auth.register');
+//       Fortify::createaccountView(function () {
+//           return view('createaccount');
 //        });
 //    }
 }
