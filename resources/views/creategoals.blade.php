@@ -3,7 +3,8 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ __('目標設定') }} - {{ config('app.name', 'Laravel') }}</title>
+
+  <title>{{ __('Set Goals') }} - {{ __('Kenkou Task Manager') }}</title>
 
     @vite(['resources/css/app.css'])
     @livewireStyles

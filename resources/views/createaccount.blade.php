@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>アカウント作成</title>
+    <link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}" class=" w-16 h-16">
+    <title>{{ __('Create Account') }} - {{ __('Kenkou Task Manager') }}</title>
     @vite(['resources/css/app.css'])
 </head>
 <body class="min-h-screen">
@@ -56,7 +57,7 @@
                             作成
                         </button>
                         <button type="button"
-                            onclick="location.href='{{ route('login') }}'"
+                            onclick="location.href='{{ route('/') }}'"
                             class="border border-gray-400 rounded-md text-gray-600 px-4 py-2 hover:bg-gray-50 transition-colors cursor-pointer">
                             キャンセル
                         </button>

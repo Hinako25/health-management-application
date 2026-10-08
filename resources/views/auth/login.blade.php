@@ -3,8 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}" class=" w-16 h-16">
 
-        <title>{{ __('Login') }} - {{ config('app.name', 'Laravel') }}</title>
+        <title>{{ __('login') }} - {{ __('Kenkou Task Manager') }}</title>
 
         @vite(['resources/css/app.css'])
         @livewireStyles
