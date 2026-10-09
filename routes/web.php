@@ -10,10 +10,11 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LoginController::class, 'create'])->name('login');
+Route::redirect('/login', '/');
 Route::post('/login/submit', [LoginController::class, 'submit'])->name('login.submit');
 
 Route::get('/createaccount',[CreateAccountController::class, 'create'])->name('createaccount');
-Route::post('/createaccount/submit', [CreateAccountController::class, 'store'])->name('createaccount.submit');
+Route::post('/createaccount/submit', [CreateAccountController::class, 'submit'])->name('createaccount.submit');
 
 
 Route::middleware('auth')->group(function () {
