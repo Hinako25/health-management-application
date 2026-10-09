@@ -14,11 +14,17 @@ export function initWorkCount() {
     const timerText = root.querySelector('#timer-text');
     const startBtn = root.querySelector('#start-work');
     const stopBtn = root.querySelector('#stop-work');
+    const resetBtn = root.querySelector('#reset-work-countdown');
     const soundToggle = root.querySelector('#timer-sound-toggle-button');
 
     // ページが動くための条件を定義
-    if (!timerDisplay || !timerText || !startBtn || !stopBtn) {
+    if (!timerDisplay || !timerText || !startBtn || !stopBtn || !resetBtn) {
         return;
+    }
+    
+    function setWorkControlsRunning(isRunning) {
+        startBtn.disabled = isRunning;
+        stopBtn.disabled = !isRunning;
     }
 
     function playTimerEndSound() {
@@ -36,9 +42,9 @@ export function initWorkCount() {
         }, 10000);
     }
 
+
     async function persistSoundEnabled(enabled) {
         const token = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
-
         try {
             const response = await fetch('/home/sound-enabled', {
                 method: 'POST',
@@ -71,6 +77,7 @@ export function initWorkCount() {
         }
     }
 
+
     function formatTime(seconds) {
         const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
         const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
@@ -87,48 +94,54 @@ export function initWorkCount() {
     }
 
     function startCountdown() {
-        if (intervalId !== null) {
+        if (intervalId !== null || startBtn.disabled) {
             return;
         }
-
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
+        setWorkControlsRunning(true);
 
         intervalId = setInterval(() => {
             remainingSeconds--;
-
             if (remainingSeconds <= 0) {
                 remainingSeconds = 0;
                 recordWorkSession();
                 render();
                 clearInterval(intervalId);
                 intervalId = null;
-                startBtn.disabled = false;
-                stopBtn.disabled = true;
+                setWorkControlsRunning(false);
                 playTimerEndSound();
                 alert('時間が終了しました。▶play を押してください。');
                 return;
             }
-
             render();
         }, 1000);
     }
+
 
     function stopCountdown() {
         if (intervalId === null) {
             return;
         }
-
         clearInterval(intervalId);
         intervalId = null;
-        startBtn.disabled = false;
-        stopBtn.disabled = true;
+        setWorkControlsRunning(false);
+        recordWorkSession();
+        render();
+    }
+
+    function resetCountdown() {
+        if (intervalId !== null) {
+            clearInterval(intervalId);
+            intervalId = null;
+            setWorkControlsRunning(false);
+        }
+        remainingSeconds = totalSeconds;
         recordWorkSession();
         render();
     }
 
     startBtn.addEventListener('click', startCountdown);
     stopBtn.addEventListener('click', stopCountdown);
+    resetBtn.addEventListener('click', resetCountdown);
 
     soundToggle?.addEventListener('click', () => {
         setTimeout(() => {
@@ -136,11 +149,8 @@ export function initWorkCount() {
             setSoundEnabled(enabled);
         }, 0);
     });
-
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
+    setWorkControlsRunning(false);
     render();
-
     if (root.dataset.autoStart === '1') {
         startCountdown();
     }

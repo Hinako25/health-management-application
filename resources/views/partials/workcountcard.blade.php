@@ -35,17 +35,13 @@
         >
             <span id="timer-text" class="w-40 h-40 text-2xl font-bold bg-white rounded-full flex items-center justify-center tabular-nums">{{ sprintf('%02d:%02d:%02d', intdiv($totalSeconds, 3600), intdiv($totalSeconds % 3600, 60), $totalSeconds % 60) }}</span>
         </div>       
-        <button type="button" id="start-work" class="w-full bg-green-500 hover:bg-green-700 opacity-75 transition-colors cursor-pointer text-white px-3 py-1 rounded-md">作業を始める</button>
+        <button type="button" id="start-work" class="w-full bg-green-500 hover:bg-green-700 opacity-75 transition-colors cursor-pointer text-white px-3 py-1 rounded-md disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-green-500">作業を始める</button>
         <button type="button" id="stop-work" disabled class="w-full bg-[#eceef1] hover:bg-[#d5d8dc] border-2 border-[#eceef1] transition-colors cursor-pointer px-3 py-1 rounded-md disabled:cursor-not-allowed ">作業を止める</button>
         <button
             type="button"
-            id="start-stretch-countdown"
+            id="reset-work-countdown"
             class="w-full px-1 py-2 border-green-500 bg-white rounded-xl border-2 hover:bg-green-500 hover:text-white transition-colors cursor-pointer">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="text-green-500 inline-block">
-                <path d="M8 5v14l11-7z"/>
-        </svg>  
-         ストレッチを始める
+            作業時間をリセット
         </button>
     </div>
 </div>
