@@ -18,7 +18,7 @@ class CreateAccountController extends Controller
         return view('createaccount');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function submit(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
