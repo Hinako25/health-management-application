@@ -57,7 +57,7 @@
                             作成
                         </button>
                         <button type="button"
-                            onclick="location.href='{{ route('/') }}'"
+                            onclick="location.href='{{ route('login') }}'"
                             class="border border-gray-400 rounded-md text-gray-600 px-4 py-2 hover:bg-gray-50 transition-colors cursor-pointer">
                             キャンセル
                         </button>
