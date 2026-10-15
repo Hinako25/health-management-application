@@ -2,7 +2,7 @@ let chartRoot = null;
 let chartCanvas = null;
 let chartCtx = null;
 
-// flowchart.barがないためJSで定義
+// Livewireプラットフォームが対応していないためJSで定義
 // グラフのデータを保存するためのキーを定義
 function getStorageKey() {
     if (!chartRoot) {
