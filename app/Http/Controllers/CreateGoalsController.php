@@ -13,7 +13,7 @@ class CreateGoalsController extends Controller
         return view('creategoals');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function submit(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'total_goals' => ['required', 'integer'],

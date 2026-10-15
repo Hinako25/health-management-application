@@ -19,7 +19,7 @@ Route::post('/createaccount/submit', [CreateAccountController::class, 'submit'])
 
 Route::middleware('auth')->group(function () {
     Route::get('/creategoals', [CreateGoalsController::class, 'create'])->name('creategoals');
-    Route::post('/creategoals/submit', [CreateGoalsController::class, 'store'])->name('creategoals.submit');
+    Route::post('/creategoals/submit', [CreateGoalsController::class, 'submit'])->name('creategoals.submit');
     Route::get('/home', [HomeController::class, 'show'])->name('home');
     Route::post('/home/work', [WorkController::class, 'work'])->name('home.work');
     Route::post('/home/completed-tasks', [TaskController::class, 'completedTasks'])->name('home.completed-tasks');
