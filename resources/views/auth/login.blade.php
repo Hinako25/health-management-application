@@ -38,45 +38,42 @@
                     </div>
                 </div>
             </div>
-            <div class="relative w-full min-h-screen md:block md:w-[50%] overflow-hidden">
-             <div class="absolute inset-0 w-full h-screen flex flex-col justify-center items-center">
-                <div class="flex flex-col gap-4 w-2/3 ml-2">
-                   <p class="text-left text-2xl font-bold text-green-600 block">あなたの健康習慣をサポートする<br>シンプルなタスク管理アプリ</p>
-                   <br>
-                   <div class="flex items-center gap-2">
-                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12 border-2 border-green-600 rounded-full ml-5 text-green-600">
-                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                     </svg>
-                      <div class="flex flex-col">
-                        <p class="text-left text-xl text-green-600 mx-5 block">作業と休憩の時間を管理</p>
-                        <p class="text-left text-sm text-green-500  mx-5 block">集中とストレッチのバランスをとる</p>
-                     </div>
-                    </div>
-                    <br>
-                    <div class="flex items-center gap-3">
-                     <img src="{{ asset('img/strechimg.png') }}" alt="ストレッチ" class="w-12 h-12 ml-5 opacity-75 rounded-full">
-                     <div class="flex flex-col">
-                        <p class="text-left text-xl text-green-600 mx-5 block">3分のストレッチで肩こり・首の痛みを直す</p>
-                        <p class="text-left text-sm text-green-500 mx-5 block">休憩時間に体をリフレッシュ<br>※画像はイメージです</p>
-                     </div>
-                    </div>
-                    <br>
-                    <div class="flex items-center gap-3">
-                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12 border-2 border-green-600 rounded-full ml-5 text-green-600">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
-                     </svg>
-                     <div class="flex flex-col">    
-                        <p class="text-left text-xl text-green-600 mx-5 block">習慣の記録を可視化</p>
-                        <p class="text-left text-sm text-green-500  mx-5 block">続けるほどに変化がわかる</p>
-                     </div>
-                    </div>
-                </div>
-             </div>
-             <img
+            <div class="relative isolate flex min-h-screen w-full min-w-0 bg-[#CFE9D1] md:w-1/2">
+                <img
                     src="{{ asset('img/bgdesign.png') }}"
                     alt=""
-                    class="absolute inset-0 w-full h-full object-fit pointer-events-none -z-10"
-             >
+                    class="pointer-events-none absolute inset-0 h-full w-full object-contain object-center"
+                >
+                <div class="relative z-10 flex w-full flex-col items-center justify-center px-8 py-10">
+                    <div class="flex w-full max-w-md flex-col gap-6">
+                        <p class="text-left text-2xl font-bold text-green-600">あなたの健康習慣をサポートする<br>シンプルなタスク管理アプリ</p>
+                        <div class="flex items-center gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12 shrink-0 rounded-full border-2 border-green-600 text-green-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <div class="min-w-0">
+                                <p class="text-left text-xl text-green-600">作業と休憩の時間を管理</p>
+                                <p class="text-left text-sm text-green-500">集中とストレッチのバランスをとる</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <img src="{{ asset('img/strechimg.png') }}" alt="ストレッチ" class="size-12 shrink-0 rounded-full opacity-75">
+                            <div class="min-w-0">
+                                <p class="text-left text-xl text-green-600">3分のストレッチで肩こり・首の痛みを直す</p>
+                                <p class="text-left text-sm text-green-500">休憩時間に体をリフレッシュ<br>※画像はイメージです</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12 shrink-0 rounded-full border-2 border-green-600 text-green-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+                            </svg>
+                            <div class="min-w-0">
+                                <p class="text-left text-xl text-green-600">習慣の記録を可視化</p>
+                                <p class="text-left text-sm text-green-500">続けるほどに変化がわかる</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
