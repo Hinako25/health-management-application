@@ -5,7 +5,8 @@
 
 
 
-<img width="1400" alt="スクリーンショット 2026-09-03 153220" src="https://github.com/user-attachments/assets/3a70d82c-62e1-42a0-a886-343ad619bf7f"/>
+
+<img width="1400" alt="スクリーンショット 2026-10-19 070511" src="https://github.com/user-attachments/assets/4e48bbc5-b582-469b-96a9-93f49b65eb99" />
 <img width="700" height="350" alt="スクリーンショット 2026-09-03 155742" src="https://github.com/user-attachments/assets/2304d677-1554-420c-910a-1553aeba7938" />
 <img width="700" height="350" alt="スクリーンショット 2026-09-02 114147" src="https://github.com/user-attachments/assets/ef8fe106-f5a0-4ab5-9e33-0085ff13ed83" />
 <img width="700" height="350" alt="スクリーンショット 2026-09-03 160000" src="https://github.com/user-attachments/assets/4c1f6e05-03bc-40ef-8645-c9689a2b2d0c" />
