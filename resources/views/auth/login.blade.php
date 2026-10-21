@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="relative isolate flex min-h-screen w-full min-w-0 bg-[#CFE9D1] md:w-1/2">
+            <div class="relative isolate flex min-h-screen w-full min-w-0 bg-[#C8F3BB] md:w-1/2">
                 <img
                     src="{{ asset('img/bgdesign.png') }}"
                     alt=""
