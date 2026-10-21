@@ -2,12 +2,23 @@
 毎日ストレッチを行い、成果を可視化し健康へつなげていくアプリです。
 仕事(勉強)時間を設定し、終了後決められたストレッチを行ってもらいます。
 アカウント設定時に、ストレッチを行う期間・仕事(作業)時間・一日のストレッチ回数を設定します。
-<img width="1400" alt="スクリーンショット 2026-09-03 153220" src="https://github.com/user-attachments/assets/3a70d82c-62e1-42a0-a886-343ad619bf7f"/>
-<img width="700" height="350" alt="スクリーンショット 2026-09-03 155742" src="https://github.com/user-attachments/assets/2304d677-1554-420c-910a-1553aeba7938" />
-<img width="700" height="350" alt="スクリーンショット 2026-09-02 114147" src="https://github.com/user-attachments/assets/ef8fe106-f5a0-4ab5-9e33-0085ff13ed83" />
-<img width="700" height="350" alt="スクリーンショット 2026-09-03 160000" src="https://github.com/user-attachments/assets/4c1f6e05-03bc-40ef-8645-c9689a2b2d0c" />
 
 
+
+
+<img width="1400" alt="スクリーンショット 2026-10-19 070511" src="https://github.com/user-attachments/assets/4e48bbc5-b582-469b-96a9-93f49b65eb99" />
+<img width="700" height="350" alt="目標設定画面" src="https://github.com/user-attachments/assets/2304d677-1554-420c-910a-1553aeba7938" />
+<img width="700" height="350" alt="ホーム画面" src="https://github.com/user-attachments/assets/d21b0a0c-fc27-40b8-a809-4fd7144359a2" />
+<img width="700" height="350" alt="操作画面" src="https://github.com/user-attachments/assets/dd3886ba-a74d-4502-8b5d-668d58977ba4" />
+<img width="700" height="350" alt="設定画面" src="https://github.com/user-attachments/assets/9348bed9-614b-4fe3-b344-d13ee390c5d7" />
+
+
+# URL
+https://kenkou-app.fly.dev/
+
+デプロイ時にDBaaSとしてのFly.ioプラットフォームを利用しています。
+<br>
+リンクを押すと、502のエラーが表示されるためお手数ですがリロードをお願いします。
 
 # 使用技術
 ## 開発環境
