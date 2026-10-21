@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OperationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LoginController::class, 'create'])->name('login');
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/home/work', [WorkController::class, 'work'])->name('home.work');
     Route::post('/home/completed-tasks', [TaskController::class, 'completedTasks'])->name('home.completed-tasks');
     Route::post('/home/sound-enabled', [WorkController::class, 'updateSoundEnabled'])->name('home.sound-enabled');
+    Route::get('/operation', [OperationController::class, 'show'])->name('operation');
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::post('/dashboard/update', [DashboardController::class, 'dashboardUpdate'])->name('dashboard.update');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
