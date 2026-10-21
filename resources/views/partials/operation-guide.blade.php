@@ -22,9 +22,13 @@
         <div x-show="tab === '{{ $key }}'" @if ($key !== 'work') x-cloak style="display: none" @endif class="mt-4">
             <h2 class="text-xl font-bold text-[#1a1d23]">{{ $guide['title'] }}</h2>
 
-            {{-- home画面のスクリーンショット --}}
             <div class="flex justify-center mt-4">
-                <img src="{{ asset($guide['image']) }}" alt="{{ $guide['title'] }}のスクリーンショット" class="w-full md:w-3/5 h-auto">
+                <figure class="relative w-full md:w-2/5 border-4 rounded-md p-1">
+                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-black text-white text-lg font-bold rounded-full w-8 h-8 flex items-center justify-center">
+                        {{ $guide['number'] }}
+                    </span>
+                    <img src="{{ asset($guide['image']) }}" alt="{{ $guide['title'] }}のスクリーンショット" class="w-full h-auto rounded-sm">
+                </figure>
             </div>
 
             {{-- 解説 --}}
