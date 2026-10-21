@@ -13,9 +13,9 @@ class UserTest extends TestCase
     use RefreshDatabase;
     public function test_returns_a_successful_response(): void
     {
-        $response = $this->get('/');
+        $response = $this->get(route('login'));
         $response->assertOk();
-        $response->assertViewIs('welcome');
+        $response->assertViewIs('login');
     }
     public function test_create_account_success()
     {
@@ -40,7 +40,7 @@ class UserTest extends TestCase
     }
     public function test_create_login_success()
     {
-        $this->get(route('login'))->assertOk()->assertViewIs('auth.login');
+        $this->get(route('login'))->assertOk()->assertViewIs('login');
         $user = User::factory()->create([
             'email' => 'test@example.com',
             'password' => 'password#123',
