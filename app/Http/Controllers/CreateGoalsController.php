@@ -24,7 +24,7 @@ class CreateGoalsController extends Controller
 
         auth()->user()->update($validated);
 
-        return redirect()->route('home')->with('auto_start_work', true);
+        return redirect()->route('operation');
 
     }
     public function createGoalCardUpdate(Request $request): RedirectResponse
