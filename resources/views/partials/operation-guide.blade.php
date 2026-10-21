@@ -23,7 +23,7 @@
             <h2 class="text-xl font-bold text-[#1a1d23]">{{ $guide['title'] }}</h2>
 
             <div class="flex justify-center mt-4">
-                <figure class="relative w-full md:w-2/5 border-4 rounded-md p-1">
+                <figure class="relative w-full md:w-3/5 border-4 rounded-md p-1">
                     <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-black text-white text-lg font-bold rounded-full w-8 h-8 flex items-center justify-center">
                         {{ $guide['number'] }}
                     </span>

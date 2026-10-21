@@ -20,6 +20,9 @@
                 <div class="border-gray-300 border-2 w-full max-w-sm rounded-md p-6 bg-white">
                     <h1 class="font-bold text-center">ログイン</h1>
                     <p class="text-center my-2">ログイン情報を入力してください。</p>
+                    @if(session('success'))
+                        <p class="text-green-600 text-sm border border-green-300 bg-green-50 rounded-md p-3" role="status">{{ session('success') }}</p>
+                    @endif
                     <form class="flex flex-col gap-4 text-sm" method="POST" action="{{ route('login.submit') }}">
                         @csrf
                         <input class="border-2 rounded-md p-2 border-gray-300 hover:border-black" type="text" name="email" placeholder="Email" value="{{ old('email') }}" required>

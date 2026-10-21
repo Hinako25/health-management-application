@@ -109,6 +109,26 @@ class UserTest extends TestCase
         $this->assertEquals(5, $user->daily_tasks);
     }
     
+    public function test_operation_start_shows_home_and_auto_starts_countdown(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'test@example.com',
+            'password' => 'password#123',
+            'countdown_minutes' => 60,
+        ]);
+
+        $response = $this->actingAs($user)->post(route('operation.start'));
+        $response->assertRedirect(route('home'));
+        $response->assertSessionHas('auto_start_work', true);
+
+        $home = $this->actingAs($user)->followingRedirects()->post(route('operation.start'));
+        $home->assertOk();
+        $home->assertViewIs('home');
+        $home->assertSee('id="timer-root"', false);
+        $home->assertSee('data-auto-start="1"', false);
+        $home->assertSee('今日の成果', false);
+    }
+
     public function test_work_success(): void
     {
         $user = User::factory()->create([
