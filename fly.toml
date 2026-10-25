@@ -19,6 +19,9 @@ console_command = 'php /var/www/html/artisan tinker'
   LOG_STDERR_FORMATTER = 'Monolog\Formatter\JsonFormatter'
   SESSION_DRIVER = 'cookie'
   SESSION_SECURE_COOKIE = 'true'
+  PHP_MEMORY_LIMIT = '256M'
+  PHP_POST_MAX_SIZE = '8M'
+  PHP_UPLOAD_MAX_FILE_SIZE = '8M'
 
 [http_service]
   internal_port = 8080
@@ -33,3 +36,4 @@ console_command = 'php /var/www/html/artisan tinker'
   cpu_kind = 'shared'
   cpus = 1
   memory_mb = 1024
+

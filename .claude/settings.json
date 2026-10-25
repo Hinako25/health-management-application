@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan test:*)",
+      "Bash(docker compose exec laravel.test php artisan test:*)",
+      "Bash(git status)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(docker compose up:*)"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Bash(cat .env*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      { "matcher": "Edit|Write",
+        "hooks": [{ "type": "command", "command": "php \"$CLAUDE_PROJECT_DIR/.claude/hooks/pint-edited-file.php\"" }] }
+    ]
+  }
+}

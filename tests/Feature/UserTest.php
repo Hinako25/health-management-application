@@ -2,28 +2,29 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use RefreshDatabase;
+
     public function test_returns_a_successful_response(): void
     {
         $response = $this->get(route('login'));
         $response->assertOk();
-        $response->assertViewIs('login');
+        $response->assertViewIs('auth.login');
     }
+
     public function test_create_account_success()
     {
         $this->get(route('createaccount'))->assertOk()->assertViewIs('createaccount');
         $response = $this->from(route('createaccount'))->post(route('createaccount.submit'), [
             'email' => 'test@example.com',
             'password' => 'password#123',
-            'password_confirmation' =>'password#123',
+            'password_confirmation' => 'password#123',
         ]);
         $response->assertRedirect(route('login'));
         $response->assertSessionHas('success', 'アカウントを作成しました。');
@@ -32,15 +33,16 @@ class UserTest extends TestCase
         $this->assertEquals('test@example.com', $user->email);
         $this->assertTrue(Hash::check('password#123', $user->password));
         $this->assertNull($user->total_goals);
-         // デフォルト値が60
-        $this->assertEquals(60,$user->countdown_minutes); 
+        // デフォルト値が60
+        $this->assertEquals(60, $user->countdown_minutes);
         $this->assertNull($user->daily_tasks);
         $this->assertNull($user->goal_reward);
-       
+
     }
+
     public function test_create_login_success()
     {
-        $this->get(route('login'))->assertOk()->assertViewIs('login');
+        $this->get(route('login'))->assertOk()->assertViewIs('auth.login');
         $user = User::factory()->create([
             'email' => 'test@example.com',
             'password' => 'password#123',
@@ -59,6 +61,7 @@ class UserTest extends TestCase
         $this->assertEquals('test@example.com', $user->email);
         $this->assertTrue(Hash::check('password#123', $user->password));
     }
+
     public function test_create_goals_success()
     {
         $user = User::factory()->create([
@@ -72,7 +75,9 @@ class UserTest extends TestCase
             'daily_tasks' => 6,
             'goal_reward' => '東京に行く！',
         ]);
-        $response->assertRedirect(route('home'));
+        // 目標設定後は操作ガイド画面へ遷移する（CreateGoalsController::store）
+        $response->assertRedirect(route('operation'));
+        $response->assertSessionHasNoErrors();
         $user->refresh();
         $this->assertEquals('test@example.com', $user->email);
         $this->assertTrue(Hash::check('password#123', $user->password));
@@ -81,6 +86,7 @@ class UserTest extends TestCase
         $this->assertEquals(6, $user->daily_tasks);
         $this->assertEquals('東京に行く！', $user->goal_reward);
     }
+
     public function test_dashboard_update_success()
     {
         $user = User::factory()->create([
@@ -96,19 +102,21 @@ class UserTest extends TestCase
             'change_password' => 'password#456',
             'change_password_confirmation' => 'password#456',
             'countdown_minutes' => 90,
-            'total_goals' => 60,
+            // config/goals.php の選択肢（7 / 14 / 30 / 210）にある値を使う
+            'total_goals' => 30,
             'daily_tasks' => 5,
         ]);
+        $response->assertSessionHasNoErrors();
         $response->assertRedirect(route('dashboard'));
         $response->assertSessionHas('success', '保存が成功しました!');
         $user->refresh();
         $this->assertEquals('test2@example.com', $user->email);
         $this->assertTrue(Hash::check('password#456', $user->password));
         $this->assertEquals(90, $user->countdown_minutes);
-        $this->assertEquals(60, $user->total_goals);
+        $this->assertEquals(30, $user->total_goals);
         $this->assertEquals(5, $user->daily_tasks);
     }
-    
+
     public function test_operation_start_shows_home_and_auto_starts_countdown(): void
     {
         $user = User::factory()->create([
@@ -183,5 +191,3 @@ class UserTest extends TestCase
         $this->assertEquals(6, $user->completed_tasks);
     }
 }
-
-

@@ -28,21 +28,15 @@ function getChartData() {
         if (stored) {
             return JSON.parse(stored);
         }
+
+        // localStorage にまだないとき（初回表示など）は、Blade の data-chart-data から読む
+        return JSON.parse(chartRoot.dataset.chartData ?? '{}');
     } catch(error) {
         // データの取得に失敗した場合
         alert('エラーが発生しデータの取得に失敗しました。' + error.message);
         return {};
     }
 
-    try {
-        // データの取得に失敗した場合
-        alert.error('エラーが発生しデータの取得に失敗しました。もう一度行ってください');
-        return JSON.parse(chartRoot.dataset.chartData ?? '{}');
-    } catch(error) {
-        // データの取得に失敗した場合
-        console.error('エラーが発生しデータの取得に失敗しました。' + error.message);
-        return {};
-    }
 
 }
 // グラフのデータを保存する
@@ -114,6 +108,17 @@ function formatDuration(seconds) {
 
     return `${m}分`;
 }
+
+// 達成率（%）を計算する。目標回数が 0 のときは 0、100 を上限にする（goalscard.blade.php と同じ計算）
+function calcAchievementRate(completedTasks, dailyTasks) {
+    if (!Number.isFinite(completedTasks) || !Number.isFinite(dailyTasks) || dailyTasks <= 0) {
+        return 0;
+    }
+
+    // 先に 100 を掛けてから割る（29 / 100 * 100 が 28.999… になる浮動小数点誤差を避ける）
+    return Math.min(100, Math.floor((completedTasks * 100) / dailyTasks));
+}
+
 // 成果物の表示を更新する
 function updateGoalsCard() {
     const goalsRoot = document.getElementById('goals-card-root');
@@ -134,6 +139,20 @@ function updateGoalsCard() {
     if (totalTimeEl) {
         totalTimeEl.textContent = formatDuration(todayTotal);
     }
+
+    const rateEl = goalsRoot.querySelector('#goals-achievement-rate-display');
+    const rateBarEl = goalsRoot.querySelector('#goals-achievement-rate-bar');
+    const rate = calcAchievementRate(completedTasks, dailyTasks);
+
+    if (rateEl) {
+        rateEl.textContent = `${rate}%`;
+    }
+
+    if (rateBarEl) {
+        rateBarEl.style.width = `${rate}%`;
+    }
+
+    goalsRoot.querySelector('#goals-achievement-rate-track')?.setAttribute('aria-valuenow', String(rate));
 }
 
 // 紐づけして成果物のをセットする

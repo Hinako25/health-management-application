@@ -7,7 +7,6 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -30,35 +29,35 @@ use Illuminate\Support\Str;
  * @property string|null $goal_reward
  * @property json|null $daily_chart_data
  * @property int|null $countdown_minutes
- * @property boolean $sound_enabled
+ * @property bool $sound_enabled
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
 #[Fillable([
     'name',
-    'email', 
-    'password', 
-    'new_email', 
-    'change_password', 
-    'countdown_minutes', 
-    'completed_stretch_task_ids', 
-    'total_goals', 
-    'daily_tasks', 
-    'completed_tasks', 
-    'last_reset_date', 
-    'goal_reward', 
-    'daily_chart_data', 
-    'sound_enabled', 
-    'created_at', 
-    'updated_at'
+    'email',
+    'password',
+    'new_email',
+    'change_password',
+    'countdown_minutes',
+    'completed_stretch_task_ids',
+    'total_goals',
+    'daily_tasks',
+    'completed_tasks',
+    'last_reset_date',
+    'goal_reward',
+    'daily_chart_data',
+    'sound_enabled',
+    'created_at',
+    'updated_at',
 ])]
 #[Hidden([
-    'password', 
+    'password',
     'new_email',
     'change_password',
     'remember_token',
-    'created_at', 
-    'updated_at'
+    'created_at',
+    'updated_at',
 ])]
 class User extends Authenticatable
 {
@@ -78,14 +77,6 @@ class User extends Authenticatable
             'completed_stretch_task_ids' => 'array',
             'sound_enabled' => 'boolean',
         ];
-    }
-
-    /**
-     * @return HasMany<Timecard, $this>
-     */
-    public function timecards(): HasMany
-    {
-        return $this->hasMany(Timecard::class);
     }
 
     /**

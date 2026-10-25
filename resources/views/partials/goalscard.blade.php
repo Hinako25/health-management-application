@@ -1,6 +1,8 @@
 @php
     $dailyTasks = $dailyTasks ?? auth()->user()->daily_tasks ?? 0;
     $completedTasks = $completedTasks ?? auth()->user()->completed_tasks ?? 0;
+    // 達成率（%）。目標回数が 0 のときは 0、100 を上限にする（dailyreport.js の calcAchievementRate と同じ計算）
+    $achievementRate = $dailyTasks > 0 ? min(100, intdiv((int) $completedTasks * 100, (int) $dailyTasks)) : 0;
 @endphp
 
 <div class="border-gray-300 border-2 rounded-md w-full flex flex-col min-h-0 bg-white p-5">
@@ -14,8 +16,6 @@
         data-daily-tasks="{{ $dailyTasks }}"
         data-completed-tasks="{{ $completedTasks }}"
         class="shrink-0 flex flex-col items-start gap-3 w-full"
-        wire:model="goals-card-root"
-        wire:click="toggleGoalCard"
     >
         <flux:field variant="inline" class="w-full pl-5 py-2">
             <flux:checkbox value="daily_tasks_completed" />
@@ -23,6 +23,15 @@
                 今日のストレッチ回数:<span id="goals-completed-display">{{ $completedTasks }}/{{ $dailyTasks }}</span>
             </flux:label>
         </flux:field>
+
+        <div class="w-full pl-5 py-2">
+            <p class="text-lg tabular-nums">
+                達成率:<span id="goals-achievement-rate-display">{{ $achievementRate }}%</span>
+            </p>
+            <div class="mt-2 h-2 w-full rounded-full bg-gray-200" role="progressbar" aria-label="達成率" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ $achievementRate }}" id="goals-achievement-rate-track">
+                <div id="goals-achievement-rate-bar" class="h-2 rounded-full bg-green-500" style="width: {{ $achievementRate }}%"></div>
+            </div>
+        </div>
 
         <flux:field variant="inline" class="w-full pl-5 py-2">
             <flux:checkbox value="total_time_worked" />

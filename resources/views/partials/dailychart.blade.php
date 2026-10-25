@@ -13,7 +13,7 @@
     </div>
     @if(auth()->user()->daily_chart_data)
      @error('daily_chart_data')
-        <p class="text-red-500 text-sm border border-red-300 bg-red-50 rounded-md p-3" role="alert">{{ $error.messages }}</p>
+        <p class="text-red-500 text-sm border border-red-300 bg-red-50 rounded-md p-3" role="alert">{{ $message }}</p>
      @enderror
    @endif
 </div>
