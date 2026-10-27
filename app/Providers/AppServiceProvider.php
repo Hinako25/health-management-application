@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
-use App\Http\User;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -50,14 +48,14 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
-//     public function boot()
-//    {
-//       Fortify::loginView(function () {
-//          return view('auth.login');
-//        });
+    //     public function boot()
+    //    {
+    //       Fortify::loginView(function () {
+    //          return view('auth.login');
+    //        });
 
-//       Fortify::createaccountView(function () {
-//           return view('createaccount');
-//        });
-//    }
+    //       Fortify::createaccountView(function () {
+    //           return view('createaccount');
+    //        });
+    //    }
 }

@@ -6,8 +6,8 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-   public function show(): View
-   {
+    public function show(): View
+    {
         $user = auth()->user();
         $today = now()->toDateString();
 

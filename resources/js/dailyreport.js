@@ -2,6 +2,8 @@ let chartRoot = null;
 let chartCanvas = null;
 let chartCtx = null;
 
+
+
 // Livewireプラットフォームが対応していないためJSで定義
 // グラフのデータを保存するためのキーを定義
 function getStorageKey() {
@@ -23,14 +25,14 @@ function getChartData() {
     }
 
     try {
-        // ユーザーのデータを永遠に保存する
+        // ユーザーのデータを存在する限り保存する
         const stored = localStorage.getItem(getStorageKey());
         if (stored) {
-            return JSON.parse(stored);
+            return normalizeChartData(JSON.parse(stored));
         }
 
         // localStorage にまだないとき（初回表示など）は、Blade の data-chart-data から読む
-        return JSON.parse(chartRoot.dataset.chartData ?? '{}');
+        return normalizeChartData(JSON.parse(chartRoot.dataset.chartData ?? '{}'));
     } catch(error) {
         // データの取得に失敗した場合
         alert('エラーが発生しデータの取得に失敗しました。' + error.message);
@@ -39,9 +41,86 @@ function getChartData() {
 
 
 }
+// グラフのデータを { 'YYYY-MM-DD': { work, stretch } } の形にそろえる（PHP の空配列は JSON で [] になるため、オブジェクトに直す）
+function normalizeChartData(data) {
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+        return {};
+    }
+
+    return data;
+}
 // グラフのデータを保存する
 function saveChartData(data) {
     localStorage.setItem(getStorageKey(), JSON.stringify(data));
+}
+// 日付ごとのデータを、サーバーに送る形 [{ date, type, seconds }] に変える
+function toChartEntries(data) {
+    const entries = [];
+
+    Object.entries(data).forEach(([date, entry]) => {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+            return;
+        }
+
+        const work = Math.floor(typeof entry === 'number' ? entry : (entry?.work ?? 0));
+        const stretch = Math.floor(typeof entry === 'number' ? 0 : (entry?.stretch ?? 0));
+
+        if (work > 0) {
+            entries.push({ date, type: 'work', seconds: work });
+        }
+
+        if (stretch > 0) {
+            entries.push({ date, type: 'stretch', seconds: stretch });
+        }
+    });
+
+    return entries;
+}
+// 作業時間をサーバー（users.daily_chart_data）に足して保存し、返ってきたデータで localStorage を置き換える
+async function persistChartEntries(entries) {
+    if (entries.length === 0) {
+        return;
+    }
+
+    const token = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
+
+    try {
+        const response = await fetch('/home/daily-chart-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': token,
+            },
+            body: JSON.stringify({ entries }),
+        });
+        if (!response.ok) {
+            throw new Error('作業時間の保存に失敗しました');
+        }
+
+        const result = await response.json();
+        saveChartData(normalizeChartData(result.daily_chart_data));
+        updateDailyChart();
+    } catch (error) {
+        console.error(error);
+    }
+}
+// サーバーに保存されたデータを localStorage に反映する。サーバーにまだデータがなければ、localStorage の履歴をサーバーに送る
+function syncChartData() {
+    let serverData = {};
+
+    try {
+        serverData = normalizeChartData(JSON.parse(chartRoot.dataset.chartData ?? '{}'));
+    } catch (error) {
+        console.error(error);
+    }
+
+    if (Object.keys(serverData).length > 0) {
+        saveChartData(serverData);
+        return;
+    }
+
+    persistChartEntries(toChartEntries(getChartData()));
 }
 // 経過した日数を数値化してＹ軸の範囲を決める
 export function getElapsedDays() {
@@ -74,7 +153,7 @@ function getDayKeys() {
     const end = new Date(start);
     end.setDate(end.getDate() + totalGoals - 1);
 
-    // 一日をｘ軸の１として書き加えていく(今日の日付は含まない)
+    // 一日をｘ軸の１として書き加えていく
     const days = [];
     const daysloop = new Date(start);
     while (daysloop <= end) {
@@ -276,7 +355,8 @@ function drawChart() {
 
 // 作業時間の計測を始める
 export function addWorkSeconds(seconds, type = 'work') {
-    if (seconds <= 0) {
+    // グラフがない画面では、ユーザーごとのキーが作れないため保存しない
+    if (seconds <= 0 || !chartRoot) {
         return;
     }
 
@@ -291,6 +371,7 @@ export function addWorkSeconds(seconds, type = 'work') {
     data[today][type] = (data[today][type] ?? 0) + seconds;
     saveChartData(data);
     updateDailyChart();
+    persistChartEntries([{ date: today, type, seconds }]);
 }
 
 // グラフの描写をhome.jsに送り、更新をする
@@ -307,6 +388,8 @@ export function initDailyReport() {
     if (!chartRoot) {
         return;
     }
+
+    syncChartData();
 
     chartCanvas = chartRoot.querySelector('#daily-chart-canvas');
     if (!chartCanvas) {

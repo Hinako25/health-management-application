@@ -25,9 +25,9 @@ use Illuminate\Support\Str;
  * @property int|null $daily_tasks
  * @property int|null $completed_stretch_task_ids
  * @property int|null $completed_tasks
- * @property date|null $last_reset_date
+ * @property string|null $last_reset_date
  * @property string|null $goal_reward
- * @property json|null $daily_chart_data
+ * @property array<string, array{work: int, stretch: int}>|null $daily_chart_data
  * @property int|null $countdown_minutes
  * @property bool $sound_enabled
  * @property Carbon|null $created_at
@@ -75,6 +75,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'completed_stretch_task_ids' => 'array',
+            'daily_chart_data' => 'array',
             'sound_enabled' => 'boolean',
         ];
     }

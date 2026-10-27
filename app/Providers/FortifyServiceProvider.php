@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\CreateAccountController;
-use App\Http\Controllers\LoginController;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;

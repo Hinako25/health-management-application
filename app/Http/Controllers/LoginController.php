@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
@@ -30,7 +29,7 @@ class LoginController extends Controller
             return back()
                 ->withInput($request->only('email'))
                 ->withErrors([
-                    'email' => 'メールアドレスまたはパスワードが正しくありません。またはパスワードのセキュリティが欠けています。'
+                    'email' => 'メールアドレスまたはパスワードが正しくありません。またはパスワードのセキュリティが欠けています。',
                 ]);
         }
 
@@ -44,11 +43,11 @@ class LoginController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
-      Auth::logout();
+        Auth::logout();
 
-      $request->session()->invalidate();
-      $request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-      return redirect()->route('login');
-    }   
+        return redirect()->route('login');
+    }
 }

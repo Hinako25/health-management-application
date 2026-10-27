@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
-
 use Illuminate\Validation\Rule;
 
 class WorkController extends Controller
@@ -20,8 +18,10 @@ class WorkController extends Controller
         auth()->user()->update([
             'countdown_minutes' => $validated['countdown_minutes'],
         ]);
+
         return redirect()->route('home');
     }
+
     public function updateSoundEnabled(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -31,9 +31,9 @@ class WorkController extends Controller
         $user->update([
             'sound_enabled' => $validated['sound_enabled'],
         ]);
+
         return response()->json([
             'sound_enabled' => (int) $user->sound_enabled,
         ]);
     }
 }
-

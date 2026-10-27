@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Validation\Rules\Password;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class CreateAccountController extends Controller
 {
@@ -42,9 +41,9 @@ class CreateAccountController extends Controller
         User::create([
             'name' => $validated['email'],
             'email' => $validated['email'],
-            'password' => Hash::make($validated['password']), 
+            'password' => Hash::make($validated['password']),
         ]);
 
         return redirect()->route('login')->with('success', 'アカウントを作成しました。');
-    }     
+    }
 }
