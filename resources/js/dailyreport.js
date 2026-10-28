@@ -268,9 +268,41 @@ async function persistCompletedTasks(count) {
         if (!response.ok) {
             throw new Error('保存に失敗しました');
         }
+
+        updateStreakPoints(await response.json());
     } catch (error) {
         console.error(error);
     }
+}
+
+// 連続日数・ポイントの表示を更新し、ご褒美をもらったときはお知らせを出す
+function updateStreakPoints(result) {
+    const streakEl = document.getElementById('goals-streak-display');
+    const pointsEl = document.getElementById('daily-chart-points-display');
+    const rewardCard = document.getElementById('goals-reward-card');
+    const rewardMessage = document.getElementById('goals-reward-message');
+
+    if (streakEl) {
+        streakEl.textContent = String(result.streak_days ?? 0);
+    }
+
+    if (pointsEl) {
+        pointsEl.textContent = String(result.points ?? 0);
+    }
+
+    if (result.rewarded_points > 0 && rewardCard && rewardMessage) {
+        rewardMessage.textContent = `${result.streak_days}日連続で達成しました！ ${result.rewarded_points}pt もらえました。`;
+        rewardCard.classList.remove('hidden');
+    }
+}
+
+// ご褒美のお知らせを閉じるボタン
+function initRewardCard() {
+    const rewardCard = document.getElementById('goals-reward-card');
+
+    document.getElementById('goals-reward-close')?.addEventListener('click', () => {
+        rewardCard?.classList.add('hidden');
+    });
 }
 // import先home.jsからhome.blade.php経由で結果を更新する
 export async function incrementCompletedTasks() {
@@ -384,6 +416,7 @@ export function updateDailyChart() {
 export function initDailyReport() {
     chartRoot = document.getElementById('daily-chart-root');
     updateGoalsCard();
+    initRewardCard();
 
     if (!chartRoot) {
         return;

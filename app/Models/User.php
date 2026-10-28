@@ -28,6 +28,9 @@ use Illuminate\Support\Str;
  * @property string|null $last_reset_date
  * @property string|null $goal_reward
  * @property array<string, array{work: int, stretch: int}>|null $daily_chart_data
+ * @property int $streak_days
+ * @property Carbon|null $last_streak_date
+ * @property int $points
  * @property int|null $countdown_minutes
  * @property bool $sound_enabled
  * @property Carbon|null $created_at
@@ -47,6 +50,9 @@ use Illuminate\Support\Str;
     'last_reset_date',
     'goal_reward',
     'daily_chart_data',
+    'streak_days',
+    'last_streak_date',
+    'points',
     'sound_enabled',
     'created_at',
     'updated_at',
@@ -76,8 +82,21 @@ class User extends Authenticatable
             'password' => 'hashed',
             'completed_stretch_task_ids' => 'array',
             'daily_chart_data' => 'array',
+            'last_streak_date' => 'date',
             'sound_enabled' => 'boolean',
         ];
+    }
+
+    /**
+     * 今の連続日数。最後に目標回数をやった日が昨日より前なら、連続は途切れているので 0 にする
+     */
+    public function currentStreakDays(): int
+    {
+        if ($this->last_streak_date === null || $this->last_streak_date->lt(today()->subDay())) {
+            return 0;
+        }
+
+        return $this->streak_days;
     }
 
     /**

@@ -33,6 +33,12 @@
             </div>
         </div>
 
+        <div class="w-full pl-5 py-2">
+            <p class="text-lg tabular-nums">
+                連続達成:<span id="goals-streak-display">{{ auth()->user()->currentStreakDays() }}</span>日
+            </p>
+        </div>
+
         <flux:field variant="inline" class="w-full pl-5 py-2">
             <flux:checkbox value="total_time_worked" />
             <flux:label class="text-lg tabular-nums">
@@ -40,4 +46,11 @@
             </flux:label>
         </flux:field>
     </flux:checkbox.group>
+
+    {{-- 連続日数のご褒美をもらったときに dailyreport.js が表示する --}}
+    <flux:card id="goals-reward-card" class="hidden w-full mt-3">
+        <flux:heading>ポイントがたまりました！</flux:heading>
+        <flux:text id="goals-reward-message" class="mt-2 mb-4"></flux:text>
+        <flux:button id="goals-reward-close" variant="outline" size="sm">閉じる</flux:button>
+    </flux:card>
 </div>
