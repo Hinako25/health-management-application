@@ -24,6 +24,13 @@
             </flux:label>
         </flux:field>
 
+        <flux:field variant="inline" class="w-full pl-5 py-2">
+            <flux:checkbox value="total_time_worked" />
+            <flux:label class="text-lg tabular-nums">
+                総作業時間:<span id="goals-total-time-display">0分</span>
+            </flux:label>
+        </flux:field>
+
         <div class="w-full pl-5 py-2">
             <p class="text-lg tabular-nums">
                 達成率:<span id="goals-achievement-rate-display">{{ $achievementRate }}%</span>
@@ -38,13 +45,6 @@
                 連続達成:<span id="goals-streak-display">{{ auth()->user()->currentStreakDays() }}</span>日
             </p>
         </div>
-
-        <flux:field variant="inline" class="w-full pl-5 py-2">
-            <flux:checkbox value="total_time_worked" />
-            <flux:label class="text-lg tabular-nums">
-                総作業時間:<span id="goals-total-time-display">0分</span>
-            </flux:label>
-        </flux:field>
     </flux:checkbox.group>
 
     {{-- 連続日数のご褒美をもらったときに dailyreport.js が表示する --}}
