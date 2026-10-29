@@ -23,10 +23,11 @@ https://kenkou-app.fly.dev/
 # 使用技術
 ## 開発環境
 - PHP 8.4.21
+- Laravel 13.29.0
 - Laravel Sail 1.64.0 
 - Laravel Framework 13.23.0
 - Composer 2.9.8
-- Docker 29.6.2
+- Docker 29.9.2
 - PostgreSQL 18
 - Node.js 24.18.0
 - npm 11.16.0 
