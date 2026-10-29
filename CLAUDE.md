@@ -54,10 +54,16 @@ Livewire starter kit から作られているが、実際の構成は **通常�
 
 画面遷移：ログイン（`/`）→ `total_goals` が未設定なら `/creategoals` → `/operation`（操作ガイド）→ `/home`（タイマー・ストレッチタスク・グラフ）。`/dashboard` は設定画面。
 
-**ユーザーごとの状態はすべて `users` テーブルのカラムに保存している**（専用テーブルはない）：`total_goals`、`daily_tasks`、`countdown_minutes`、`completed_tasks`、`last_reset_date`、`goal_reward`、`sound_enabled` など。`HomeController::show` は `last_reset_date` が今日でなければ `completed_tasks` を 0 にリセットする。
+**ユーザーごとの設定・状態は `users` テーブルのカラムに保存している**：`total_goals`、`daily_tasks`、`countdown_minutes`、`completed_tasks`、`last_reset_date`、`goal_reward`、`sound_enabled` など。`HomeController::show` は `last_reset_date` が今日でなければ `completed_tasks` を 0 にリセットする。
+
+**ストレッチタスクだけは専用の `tasks` テーブルに保存している**（1 ユーザーが複数のタスクを持ち、1 件ずつ削除できるため）。`Task` モデルと `User::tasks()`（HasMany）で扱う。カラムは `user_id`（ユーザー削除でタスクも削除）、`name`、`countdown_seconds`、`part`・`effect`（どちらも nullable）。
+- アカウント作成時に、`CreateAccountController` が `config('stretchtasks.items')` の初期タスクをそのユーザーの tasks にコピーする（ユーザー作成と同じトランザクション）。tasks テーブルを作る前から登録していたユーザーには、`create_tasks_table` の migration が同じ初期タスクをコピーする。
+- `taskcountcard.blade.php` は Task モデルの一覧を `data-tasks` に `@json()` で渡す。`taskcount.js` が使う `id` は DB のタスク ID（config の固定値ではない）。
+- ユーザーはホーム画面のタスクカードから作成・削除できる（`UserTaskController` の `store` / `destroy`、ルート名 `home.tasks.store` / `home.tasks.destroy`）。上限は 1 人 30 件。他人のタスクの削除は 403 にする。
+- ストレッチのカウントダウン中は、`taskcount.js` が作成・削除ボタンを無効にする（送信でページが読み込み直され、カウントダウンが消えるため）。
 
 **選択肢の一覧は DB ではなく config ファイルで定義している**。バリデーションは `Rule::in(array_keys(config(...)))` の形で行う。
-- `config/stretchtasks.php`：ストレッチタスクの定義（id、name、countdown_seconds、part、effect）
+- `config/stretchtasks.php`：`items` はアカウント作成時にコピーする初期タスク（name、countdown_seconds、part、effect）、`options` はタスク作成時に選べる秒数
 - `config/workcountdown.php`：作業タイマーの分数の選択肢
 - `config/goals.php`、`config/dailytaskcontdown.php`：目標期間・1日のタスク回数の選択肢
 - `config/operationguide.php`：操作ガイドの内容

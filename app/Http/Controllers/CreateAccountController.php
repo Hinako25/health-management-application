@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -38,11 +39,17 @@ class CreateAccountController extends Controller
             'password.symbols' => 'パスワードには記号を含めてください。',
         ]);
 
-        User::create([
-            'name' => $validated['email'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-        ]);
+        // タスクのコピーに失敗したとき、タスクのないユーザーだけが残らないようにまとめて保存する
+        DB::transaction(function () use ($validated) {
+            $user = User::create([
+                'name' => $validated['email'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+            ]);
+
+            // 最初のストレッチタスクをコピーする。あとからユーザーが追加・削除できる
+            $user->tasks()->createMany(config('stretchtasks.items'));
+        });
 
         return redirect()->route('login')->with('success', 'アカウントを作成しました。');
     }

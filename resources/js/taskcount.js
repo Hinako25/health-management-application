@@ -25,6 +25,16 @@ export function initTaskCount() {
             button.disabled = disabled;
         });
     }
+
+    // タスクの作成・削除ボタンを取得する(送信するとページが読み込み直され、カウントダウンが消えるため)
+    const taskFormButtons = root.querySelectorAll('form button[type="submit"]');
+
+    function setTaskFormButtonsDisabled(disabled) {
+        taskFormButtons.forEach((button) => {
+            button.disabled = disabled;
+        });
+    }
+
     // タスクカウントのデータをJSON形式で取得する
     const tasks = JSON.parse(root.dataset.tasks ?? '[]');
     // タスクカウントのIDを定義   
@@ -100,6 +110,7 @@ export function initTaskCount() {
     function finishCountdown() {
         clearInterval(intervalId);
         intervalId = null;
+        setTaskFormButtonsDisabled(false);
          // タスクカウントがあった場合の処理を定義する
         if (activeTaskId !== null) {
             const completedButton = getTaskButton(activeTaskId);
@@ -150,6 +161,8 @@ export function initTaskCount() {
 
             renderCountdown();
         }, 1000);
+        // カウントダウン中は、タスクの作成・削除ができないようにする
+        setTaskFormButtonsDisabled(true);
     }
 
     // タスクカウントの開始ボタンをクリックした時の処理を行う
@@ -176,6 +189,8 @@ export function initTaskCount() {
         button.addEventListener('click', startCountdown);
     });
 
+    // 再読み込みでブラウザがボタンの無効状態を復元することがあるため、最初に押せる状態へ戻す
+    setTaskFormButtonsDisabled(false);
     renderCountdown();
     renderTasks();
 }

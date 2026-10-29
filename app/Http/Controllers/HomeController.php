@@ -26,7 +26,7 @@ class HomeController extends Controller
             'totalSeconds' => $totalSeconds,
             'remainingSeconds' => $totalSeconds,
             'completedTasks' => $user->completed_tasks ?? 0,
-            'tasks' => config('stretchtasks.items'),
+            'tasks' => $user->tasks()->oldest('id')->get(),
         ]);
     }
 }

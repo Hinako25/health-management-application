@@ -8,6 +8,11 @@ description: kenkou-app の業務マニュアル。migration・Controller・conf
 
 ## 1. migration（`database/migrations/`）
 - ユーザーの設定・状態は `users` テーブルにカラムを追加する（新しいテーブルは原則作らない）。
+- 例外：1 ユーザーが複数件を持ち、1 件ずつ作成・削除するデータは専用テーブルにする（例：`tasks`）。
+  - migration の名前は `create_<テーブル名>_table` にし、`down()` は `Schema::dropIfExists()` にする。
+  - `$table->foreignId('user_id')->constrained()->cascadeOnDelete()` でユーザーとつなぐ。
+  - `app/Models/` にモデルを作り、`User.php` に `HasMany`、モデル側に `BelongsTo` のリレーションを書く。`user_id` は Fillable に入れず、`auth()->user()->〇〇()->create()` で保存する。
+  - 削除・更新では、そのデータがログイン中のユーザーのものかを確認する（違えば 403）。
 - 既存テーブルへの追加は `add_<内容>_columns_to_users_table` という名前の新しい migration で行う。既存の migration ファイルは書き換えない。
 - `up()` / `down()` の両方で `Schema::hasColumn()` を使い、カラムがある／ないときに二重に実行されないようにする。
 - 回数や分数は `unsignedSmallInteger`、初期値が必要なものは `->default()`、未設定がありうるものは `->nullable()` にする。

@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OperationController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserTaskController;
 use App\Http\Controllers\WorkController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/operation/start', [OperationController::class, 'start'])->name('operation.start');
     Route::get('/home', [HomeController::class, 'show'])->name('home');
     Route::post('/home/work', [WorkController::class, 'work'])->name('home.work');
+    Route::post('/home/tasks', [UserTaskController::class, 'store'])->name('home.tasks.store');
+    Route::delete('/home/tasks/{task}', [UserTaskController::class, 'destroy'])->name('home.tasks.destroy');
     Route::post('/home/completed-tasks', [TaskController::class, 'completedTasks'])->name('home.completed-tasks');
     Route::post('/home/sound-enabled', [WorkController::class, 'updateSoundEnabled'])->name('home.sound-enabled');
     Route::post('/home/daily-chart-data', [DailyReportController::class, 'dailyChartDataUpdate'])->name('home.daily-chart-data');
