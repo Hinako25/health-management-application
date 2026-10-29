@@ -8,8 +8,8 @@
 
 <img width="1400" alt="スクリーンショット 2026-10-19 070511" src="https://github.com/user-attachments/assets/4e48bbc5-b582-469b-96a9-93f49b65eb99" />
 <img width="700" height="350" alt="目標設定画面" src="https://github.com/user-attachments/assets/2304d677-1554-420c-910a-1553aeba7938" />
-<img width="700" height="350" alt="ホーム画面" src="https://github.com/user-attachments/assets/d21b0a0c-fc27-40b8-a809-4fd7144359a2" />
 <img width="700" height="350" alt="操作画面" src="https://github.com/user-attachments/assets/dd3886ba-a74d-4502-8b5d-668d58977ba4" />
+<img width="700" height="350" alt="ホーム画面" src="https://github.com/user-attachments/assets/3bdc8b7a-2675-4c0e-8e52-1f6eec632f84" />
 <img width="700" height="350" alt="設定画面" src="https://github.com/user-attachments/assets/9348bed9-614b-4fe3-b344-d13ee390c5d7" />
 
 
@@ -22,17 +22,19 @@ https://kenkou-app.fly.dev/
 
 # 使用技術
 ## 開発環境
-- PHP 8.4.21
-- Laravel 13.29.0
-- Laravel Sail 1.64.0 
-- Laravel Framework 13.23.0
+## 使用技術
+- JavaScript (ES6)
+- PHP 8.4
+- Laravel 13
+- Laravel Sail 1.64 
+- Laravel Framework 13.23
 - Composer 2.9.8
-- Docker 29.9.2
-- PostgreSQL 18
-- Node.js 24.18.0
-- npm 11.16.0 
-- livewire 4.3.3 
-- livewire/flux-pro 2.15.0
+- Docker 29
+- PostgreSQL 
+- Node.js 24.18
+- npm 12 
+- livewire 4
+- livewire/flux-pro 2.15
 - Cloude Code
 
 # 機能一覧
@@ -60,11 +62,13 @@ https://kenkou-app.fly.dev/
 - ストレッチタスク一覧表示
 - タスク内容／所要時間表示／効果
 - タスク実施記録の保存
+- ストレッチの作成・削除
 
 ## 活動記録・可視化機能
 - 今日のストレッチ実績表示
 - 日別の活動記録表示
 - 期間グラフ表示
+- 目標設定に沿った内容のうち3日・7日・14日・21日・30日まで連続記録を達成したときにポイントを付与、達成の通知
 
 ## 操作ガイド機能
 - 各機能別に画面の切り替え
