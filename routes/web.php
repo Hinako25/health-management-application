@@ -21,7 +21,7 @@ Route::post('/createaccount/submit', [CreateAccountController::class, 'submit'])
 
 Route::middleware('auth')->group(function () {
     Route::get('/creategoals', [CreateGoalsController::class, 'create'])->name('creategoals');
-    Route::post('/creategoals/submit', [CreateGoalsController::class, 'sbmit'])->name('creategoals.submit');
+    Route::post('/creategoals/submit', [CreateGoalsController::class, 'store'])->name('creategoals.submit');
     Route::get('/operation', [OperationController::class, 'show'])->name('operation');
     Route::post('/operation/start', [OperationController::class, 'start'])->name('operation.start');
     Route::get('/home', [HomeController::class, 'show'])->name('home');
