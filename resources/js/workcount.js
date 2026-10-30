@@ -109,7 +109,7 @@ export function initWorkCount() {
                 intervalId = null;
                 setWorkControlsRunning(false);
                 playTimerEndSound();
-                alert('時間が終了しました。▶play を押してください。');
+                alert('時間が終了しました。「タスクを開始」を押してください。');
                 return;
             }
             render();
