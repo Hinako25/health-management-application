@@ -291,7 +291,9 @@ function updateStreakPoints(result) {
     }
 
     if (result.rewarded_points > 0 && rewardCard && rewardMessage) {
-        rewardMessage.textContent = `${result.streak_days}日連続で達成しました！ ${result.rewarded_points}pt もらえました。`;
+        // 連続 1 日目は「連続」と書かず、2 日目からは連続日数を出す
+        const achievement = result.streak_days > 1 ? `頑張ったね！${result.streak_days}日連続で達成しました！` : '今日も頑張ったね！';
+        rewardMessage.textContent = `おめでとう！${achievement} ${result.rewarded_points}pt もらえました。`;
         rewardCard.classList.remove('hidden');
     }
 }

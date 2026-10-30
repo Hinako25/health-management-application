@@ -63,15 +63,15 @@ class StreakPointsTest extends TestCase
             ->assertExactJson([
                 'completed_tasks' => 3,
                 'streak_days' => 1,
-                'points' => 0,
-                'rewarded_points' => 0,
+                'points' => 50,
+                'rewarded_points' => 50,
             ]);
 
         $user->refresh();
         $this->assertSame(3, $user->completed_tasks);
         $this->assertSame(1, $user->streak_days);
         $this->assertSame('2026-10-27', $user->last_streak_date?->toDateString());
-        $this->assertSame(0, $user->points);
+        $this->assertSame(50, $user->points);
     }
 
     public function test_not_reaching_daily_tasks_does_not_change_streak(): void
@@ -99,7 +99,7 @@ class StreakPointsTest extends TestCase
 
         $this->postCompletedTasks($user, 3)
             ->assertOk()
-            ->assertJson(['streak_days' => 2, 'points' => 0, 'rewarded_points' => 0]);
+            ->assertJson(['streak_days' => 2, 'points' => 50, 'rewarded_points' => 50]);
 
         $user->refresh();
         $this->assertSame(2, $user->streak_days);
@@ -115,41 +115,47 @@ class StreakPointsTest extends TestCase
             ->assertExactJson([
                 'completed_tasks' => 3,
                 'streak_days' => 1,
-                'points' => 100,
-                'rewarded_points' => 0,
+                'points' => 150,
+                'rewarded_points' => 50,
             ]);
 
         $user->refresh();
         $this->assertSame(1, $user->streak_days);
-        $this->assertSame(100, $user->points);
+        // 連続が途切れても、たまったポイントは減らず、毎日のポイントはもらえる
+        $this->assertSame(150, $user->points);
     }
 
     /**
-     * config('streakpoints.rewards') の日数に達したときだけポイントが足される
+     * 毎日の 50pt に、config('streakpoints.rewards') の日数に達したときだけ連続ボーナスが足される
      *
      * @return array<string, array{int, int}>
      */
     public static function rewardProvider(): array
     {
         return [
-            '3日目は100pt' => [3, 100],
-            '4日目は0pt' => [4, 0],
-            '7日目は300pt' => [7, 300],
-            '14日目は1000pt' => [14, 1000],
-            '15日目は0pt（数え続ける）' => [15, 0],
-            '21日目は2000pt' => [21, 2000],
-            '30日目は3000pt' => [30, 3000],
-            '60日目は5000pt' => [60, 5000],
-            '61日目は0pt（数え続ける）' => [61, 0],
+            '1日目は50pt' => [1, 50],
+            '2日目は50pt' => [2, 50],
+            '3日目は50+100pt' => [3, 150],
+            '4日目は50pt' => [4, 50],
+            '7日目は50+300pt' => [7, 350],
+            '14日目は50+1000pt' => [14, 1050],
+            '15日目は50pt（数え続ける）' => [15, 50],
+            '21日目は50+2000pt' => [21, 2050],
+            '30日目は50+3000pt' => [30, 3050],
+            '60日目は50+5000pt' => [60, 5050],
+            '61日目は50pt（数え続ける）' => [61, 50],
         ];
     }
 
     #[DataProvider('rewardProvider')]
     public function test_points_are_rewarded_on_configured_streak_days(int $streakDays, int $reward): void
     {
+        $this->assertSame(50, config('streakpoints.daily'));
         $this->assertSame([3 => 100, 7 => 300, 14 => 1000, 21 => 2000, 30 => 3000, 60 => 5000], config('streakpoints.rewards'));
 
-        $user = $this->createStreakUser(dailyTasks: 3, streakDays: $streakDays - 1, lastStreakDate: '2026-10-26', points: 50);
+        // 1 日目は、まだ一度も目標回数を達成していない状態にする
+        $lastStreakDate = $streakDays === 1 ? null : '2026-10-26';
+        $user = $this->createStreakUser(dailyTasks: 3, streakDays: $streakDays - 1, lastStreakDate: $lastStreakDate, points: 50);
 
         $this->postCompletedTasks($user, 3)
             ->assertOk()
@@ -171,7 +177,7 @@ class StreakPointsTest extends TestCase
 
         $this->postCompletedTasks($user, 3)
             ->assertOk()
-            ->assertJson(['streak_days' => 3, 'points' => 100, 'rewarded_points' => 100]);
+            ->assertJson(['streak_days' => 3, 'points' => 150, 'rewarded_points' => 150]);
 
         // 同じ日に目標回数を超えて続けても、もう一度は数えない
         $this->postCompletedTasks($user->fresh(), 4)
@@ -179,26 +185,26 @@ class StreakPointsTest extends TestCase
             ->assertExactJson([
                 'completed_tasks' => 4,
                 'streak_days' => 3,
-                'points' => 100,
+                'points' => 150,
                 'rewarded_points' => 0,
             ]);
 
         $user->refresh();
         $this->assertSame(4, $user->completed_tasks);
         $this->assertSame(3, $user->streak_days);
-        $this->assertSame(100, $user->points);
+        $this->assertSame(150, $user->points);
     }
 
     public function test_streak_is_counted_again_on_next_day(): void
     {
         $user = $this->createStreakUser(dailyTasks: 3, streakDays: 1, lastStreakDate: '2026-10-26');
-        $this->postCompletedTasks($user, 3)->assertOk()->assertJson(['streak_days' => 2]);
+        $this->postCompletedTasks($user, 3)->assertOk()->assertJson(['streak_days' => 2, 'points' => 50]);
 
         $this->travelTo(Carbon::parse('2026-10-28 09:00:00'));
 
         $this->postCompletedTasks($user->fresh(), 3)
             ->assertOk()
-            ->assertJson(['streak_days' => 3, 'points' => 100, 'rewarded_points' => 100]);
+            ->assertJson(['streak_days' => 3, 'points' => 200, 'rewarded_points' => 150]);
 
         $this->assertSame('2026-10-28', $user->fresh()->last_streak_date?->toDateString());
     }

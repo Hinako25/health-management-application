@@ -28,10 +28,10 @@ class TaskController extends Controller
             $dailyTasks = $locked->daily_tasks ?? 0;
             $today = today();
 
-            // 今日はじめて目標回数に達したときだけ、連続日数を数えてご褒美のポイントを足す
+            // 今日はじめて目標回数に達したときだけ、連続日数を数えて毎日のポイントと連続ボーナスを足す
             if ($dailyTasks > 0 && $locked->completed_tasks >= $dailyTasks && ! $locked->last_streak_date?->isSameDay($today)) {
                 $streakDays = $locked->last_streak_date?->isSameDay($today->copy()->subDay()) ? $locked->streak_days + 1 : 1;
-                $rewardedPoints = config('streakpoints.rewards')[$streakDays] ?? 0;
+                $rewardedPoints = (int) config('streakpoints.daily', 0) + (config('streakpoints.rewards')[$streakDays] ?? 0);
 
                 $locked->update([
                     'streak_days' => $streakDays,

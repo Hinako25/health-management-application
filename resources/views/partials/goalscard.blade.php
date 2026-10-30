@@ -47,7 +47,7 @@
         </div>
     </flux:checkbox.group>
 
-    {{-- 連続日数のご褒美をもらったときに dailyreport.js が表示する --}}
+    {{-- 目標回数を達成してポイントをもらったときに dailyreport.js が表示する --}}
     <flux:card id="goals-reward-card" class="hidden w-full mt-3">
         <flux:heading>ポイントがたまりました！</flux:heading>
         <flux:text id="goals-reward-message" class="mt-2 mb-4"></flux:text>
