@@ -2,8 +2,6 @@
 
 @section('main')
  <div class="relative w-full min-h-screen">
-  <form action="{{ route('home') }}" method="POST">
-   @csrf
     <img
         src="{{ asset('img/homegbdesign.png') }}"
         alt=""
@@ -28,6 +26,5 @@
         </div>
      </div>
     </div>
-   </form>
   </div>
-  @endsection
+@endsection
