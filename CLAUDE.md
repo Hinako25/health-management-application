@@ -13,6 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 コードを変更したら、**実装 → reviewer（レビュー）→ tester（テスト）** の順に進める。
 - 実装は `coding-manual` スキル（業務マニュアル）に従い、最後に報告義務の形式で報告する。
 - サブエージェントは作業中にユーザーへ質問できない。読ませたいファイルやレビュー対象は、呼び出すときの依頼文で指定する。
+- アプリケーションの実行権限を最小限にするための変更（Dockerfile・`.fly/` の設定・ファイルの所有者や権限など）は、Claude がコードを書かない。問題点とヒントを示し、ユーザー自身が修正する。修正後の確認は行う。
 
 ## コマンド
 
@@ -79,6 +80,7 @@ Livewire starter kit から作られているが、実際の構成は **通常�
 - PHP の値を `data-*` 属性で JS に渡すときは、スカラー値は `{{ }}`、配列は `@json()` を使う。`@json()` に独自のフラグを渡さない（デフォルトで `<` `>` `'` `"` `&` がエスケープされる）。
 - JS で DOM に文字を入れるときは `textContent` を使う。`innerHTML`・`insertAdjacentHTML`・`outerHTML`・`document.write`・`eval` は使わない。
 - URL をユーザー入力から組み立てて `href` / `src` に入れない（`javascript:` スキームが入る恐れがある）。
+- 外部サイトのスクリプトや `iframe` を追加する必要があるときは、追加する前に作業を止め、必要な理由をユーザーに説明して確認を取る。
 
 ### CSRF（クロスサイトリクエストフォージェリ）対策
 
@@ -88,3 +90,9 @@ Livewire starter kit から作られているが、実際の構成は **通常�
 - `bootstrap/app.php` で `validateCsrfTokens(except: ...)` を使って CSRF チェックを除外しない。
 - セッション Cookie の `same_site` は `lax` 以上を維持する（`config/session.php`）。
 
+### ディレクトリトラバーサル対策
+
+- ユーザーの入力（リクエストのパラメータ、ファイル名など）からファイルパスを組み立てない。どうしても必要な場合は、許可する値を config に定義して `Rule::in()` で検証する。
+- ユーザーが HTML・画像などのファイルをアップロード・ダウンロードできる機能を追加するときは、実装する前に作業を止めてユーザーに確認する。
+- 外部に公開するのは `public/` だけにする（`.fly/nginx/sites-available/default` の `root`）。`.env`・`auth.json` は git にも Docker イメージにも入れない（`.gitignore`・`.dockerignore`）。
+- パスを扱うバリデーションを追加したら、`tests/` に `../` や `%2e%2e%2f` を送って拒否されることを確かめるテストを書く。
