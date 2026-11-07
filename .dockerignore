@@ -25,4 +25,5 @@ fly.toml
 **/*.log
 **/.DS_Store
 **/Thumbs.db
+**/auth.json
 public/hot
