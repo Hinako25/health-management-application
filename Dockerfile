@@ -66,7 +66,7 @@ RUN --mount=type=secret,id=composer_auth,target=/var/www/html/auth.json,required
     && sed -i='' '/->withMiddleware(function (Middleware \$middleware) {/a\
         \$middleware->trustProxies(at: "*");\
     ' bootstrap/app.php; \
-    && if [ -d .fly ]; then cp .fly/entrypoint.sh /entrypoint; chmod +x /entrypoint; fi;
+    if [ -d .fly ]; then cp .fly/entrypoint.sh /entrypoint; chmod +x /entrypoint; fi;
 
 
 
